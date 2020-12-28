@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["EntryConfig",""],["Mode",""]],"struct":[["AliasConfig",""],["Config",""],["JsCallback",""],["ModuleConfig",""],["OptimizationConfig",""],["OutputConfig",""],["ResolveConfig","https://webpack.js.org/configuration/resolve/"]]});

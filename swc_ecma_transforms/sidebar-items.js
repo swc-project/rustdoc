@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["const_modules",""],["fixer",""],["hygiene",""]],"macro":[["enable_helper",""]],"mod":[["compat","New-generation javascript to old-javascript compiler."],["debug",""],["helpers",""],["modules",""],["optimization",""],["pass",""],["proposals",""],["react",""],["resolver",""],["scope",""],["typescript",""],["util",""]]});

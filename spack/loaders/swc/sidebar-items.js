@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SwcLoader","JavaScript loader"]]});

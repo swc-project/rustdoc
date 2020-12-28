@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["dead_branch_remover","Not intended for general use. Use [simplifier] instead."],["expr_simplifier","Not intended for general use. Use [simplifier] instead."],["simplifier","Performs simplify-expr, inlining, remove-dead-branch and dce until nothing changes."]],"mod":[["const_propgation",""],["dce",""],["inlining",""]],"struct":[["Config",""]]});

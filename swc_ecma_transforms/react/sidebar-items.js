@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["display_name","`@babel/plugin-transform-react-display-name`"],["jsx","`@babel/plugin-transform-react-jsx`"],["jsx_self","`@babel/plugin-transform-react-jsx-self`"],["jsx_src","`@babel/plugin-transform-react-jsx-source`"],["react","`@babel/preset-react`"]],"struct":[["Options",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["BundleKind",""],["ModuleType",""]],"struct":[["Bundle","Built bundle"],["Bundler",""],["Config",""],["ModuleData",""],["ModuleId",""],["ModuleRecord",""]],"trait":[["Hook",""],["Load","Responsible for providing files to the bundler."],["Resolve",""]]});

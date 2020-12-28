@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["destructuring","`@babel/plugin-transform-destructuring`"]],"struct":[["Config",""]]});

@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `relative_path` crate."><meta name="keywords" content="rust, rustlang, rust-lang, relative_path"><title>relative_path - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../relative_path/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate relative_path</p><div class='block version'><p>Version 1.3.2</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all relative_path's items</p></a><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'relative_path', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/relative_path/lib.rs.html#1-2374' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>relative_path</a></span></h1><div class='docblock'><p>Portable relative UTF-8 paths for Rust.</p>
+<p>This provide a module analogous to <a href="https://doc.rust-lang.org/std/path/index.html">std::path</a>, with the following characteristics:</p>
+<ul>
+<li>The path separator is set to a fixed character (<code>/</code>), regardless of platform.</li>
+<li>Relative paths cannot represent a path in the filesystem without first specifying what they
+are <em>relative to</em> through <a href="https://docs.rs/relative-path/1/relative_path/struct.RelativePath.html#method.to_path">to_path</a>.</li>
+<li>Relative paths are always guaranteed to be a UTF-8 string.</li>
+</ul>
+<p>On top of this we support many path-like operations that guarantee portable behavior.</p>
+<h2 id="serde-support" class="section-header"><a href="#serde-support">Serde Support</a></h2>
+<p>This library includes serde support that can be enabled with the <code>serde</code> feature.</p>
+<h2 id="why-is-stdpath-a-portability-hazard" class="section-header"><a href="#why-is-stdpath-a-portability-hazard">Why is <code>std::path</code> a portability hazard?</a></h2>
+<p>Path representations differ across platforms.</p>
+<ul>
+<li>Windows permits using drive volumes (multiple roots) as a prefix (e.g. <code>&quot;c:\&quot;</code>) and backslash (<code>\</code>) as a separator.</li>
+<li>Unix references absolute paths from a single root and uses slash (<code>/</code>) as a separator.</li>
+</ul>
+<p>If we use <code>PathBuf</code>, Storing paths like this in a manifest would happily allow our applications to build and run on one platform, but potentially not others.</p>
+<p>Consider the following manifest:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Manifest</span> {
+    <span class="ident">source</span>: <span class="ident">PathBuf</span>,
+}</pre></div>
+<p>Which represents this TOML file:</p>
+<pre><code class="language-toml"># Uh oh, trouble.
+source = &quot;C:\\path\\to\\source&quot;
+</code></pre>
+<p>Assuming <code>&quot;C:\\path\\to\\source&quot;</code> is a legal path on Windows, this will
+happily run for one platform when checked into source control but not others.</p>
+<p>Since <a href="https://docs.rs/relative-path/1/relative_path/struct.RelativePath.html">RelativePath</a> strictly uses <code>/</code> as a separator it avoids this issue.
+Anything non-slash will simply be considered part of a <em>distinct component</em>.</p>
+<p>Conversion to <a href="https://doc.rust-lang.org/std/path/struct.Path.html">Path</a> may only happen if it is known which path it is relative to through the
+<a href="https://docs.rs/relative-path/1/relative_path/struct.RelativePath.html#method.to_path">to_path</a> function. This is where the relative part of the name comes from.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">relative_path</span>::<span class="ident">RelativePath</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+
+<span class="kw">let</span> <span class="ident">relative_path</span> <span class="op">=</span> <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/bar&quot;</span>);
+<span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;C:\\&quot;</span>);
+<span class="kw">let</span> <span class="ident">full_path</span> <span class="op">=</span> <span class="ident">relative_path</span>.<span class="ident">to_path</span>(<span class="ident">path</span>);</pre></div>
+<p>This would permit relative paths to portably be used in project manifests or configurations.
+Where files are referenced from some specific, well-known point in the filesystem.</p>
+<pre><code class="language-toml">source = &quot;path/to/source&quot;
+</code></pre>
+<p>The fixed manifest would look like this:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">relative_path</span>::<span class="ident">RelativePathBuf</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>};
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Manifest</span> {
+    <span class="ident">source</span>: <span class="ident">RelativePathBuf</span>,
+}</pre></div>
+<h2 id="overview" class="section-header"><a href="#overview">Overview</a></h2>
+<p>When two relative paths are compared to each other, their exact component makeup determines equality.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">relative_path</span>::<span class="ident">RelativePath</span>;
+
+<span class="macro">assert_ne</span><span class="macro">!</span>(
+    <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/bar/../baz&quot;</span>),
+    <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/baz&quot;</span>)
+);</pre></div>
+<p>Using platform-specific path separators to construct relative paths is not supported.</p>
+<p>Path separators from other platforms are simply treated as part of a component:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">relative_path</span>::<span class="ident">RelativePath</span>;
+
+<span class="macro">assert_ne</span><span class="macro">!</span>(
+    <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/bar&quot;</span>),
+    <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo\\bar&quot;</span>)
+);
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">1</span>, <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo\\bar&quot;</span>).<span class="ident">components</span>().<span class="ident">count</span>());
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="number">2</span>, <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/bar&quot;</span>).<span class="ident">components</span>().<span class="ident">count</span>());</pre></div>
+<p>To see if two relative paths are equivalent you can use <a href="https://docs.rs/relative-path/1/relative_path/struct.RelativePath.html#method.normalize">normalize</a>:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">relative_path</span>::<span class="ident">RelativePath</span>;
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(
+    <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/bar/../baz&quot;</span>).<span class="ident">normalize</span>(),
+    <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;foo/baz&quot;</span>).<span class="ident">normalize</span>(),
+);</pre></div>
+<h2 id="additional-portability-notes" class="section-header"><a href="#additional-portability-notes">Additional portability notes</a></h2>
+<p>While relative paths avoid the most egregious portability issues, namely that absolute paths will work equally unwell on all platforms.
+We do not avoid all.</p>
+<p>This section tries to document additional portability issues that we know
+about.</p>
+<p><a href="https://docs.rs/relative-path/1/relative_path/struct.RelativePath.html">RelativePath</a>, similarly to <a href="https://doc.rust-lang.org/std/path/struct.Path.html">Path</a>, makes no guarantees that the components represented in them
+makes up legal file names.
+While components are strictly separated by slashes, we can still store things in path components which may not be used as legal paths on all platforms.</p>
+<ul>
+<li><code>NUL</code> is not permitted on unix platforms - this is a terminator in C-based filesystem APIs. Slash
+(<code>/</code>) is also used as a path separator.</li>
+<li>Windows has a number of <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx">reserved characters and names</a>.</li>
+</ul>
+<p>As a relative path that <em>actually</em> contains a platform-specific absolute path
+will result in a nonsensical path being generated.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">relative_path</span>::<span class="ident">RelativePath</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+
+<span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">windows</span>) {
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;foo\\c:\\bar\\baz&quot;</span>),
+        <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;c:\\bar\\baz&quot;</span>).<span class="ident">to_path</span>(<span class="string">&quot;foo&quot;</span>)
+    );
+}
+
+<span class="kw">if</span> <span class="macro">cfg</span><span class="macro">!</span>(<span class="ident">unix</span>) {
+    <span class="macro">assert_eq</span><span class="macro">!</span>(
+        <span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;foo/bar/baz&quot;</span>),
+        <span class="ident">RelativePath</span>::<span class="ident">new</span>(<span class="string">&quot;/bar/baz&quot;</span>).<span class="ident">to_path</span>(<span class="string">&quot;foo&quot;</span>)
+    );
+}</pre></div>
+<p>This is intentional in order to cause an early breakage when a platform
+encounters paths like <code>&quot;foo/c:\\bar\\baz&quot;</code> to signal that it is a
+portability hazard.
+On Unix it's a bit more subtle with <code>&quot;&quot;foo/bar/baz&quot;&quot;</code>, since the leading
+slash (<code>/</code>) will simply be ignored.
+The hope is that it will be more probable to cause an early error unless a
+compatible relative path <em>also</em> exists.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.Components.html" title='relative_path::Components struct'>Components</a></td><td class='docblock-short'><p>Iterator over all the components in a relative path.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Display.html" title='relative_path::Display struct'>Display</a></td><td class='docblock-short'><p>Helper struct for printing relative paths.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.FromPathError.html" title='relative_path::FromPathError struct'>FromPathError</a></td><td class='docblock-short'><p>An error raised when attempting to convert a path using <a href="../relative_path/struct.RelativePathBuf.html#method.from_path" title="RelativePathBuf::from_path">RelativePathBuf::from_path</a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Iter.html" title='relative_path::Iter struct'>Iter</a></td><td class='docblock-short'><p>An iterator over the <a href="../relative_path/enum.Component.html" title="Component">Component</a>s of a <a href="../relative_path/struct.RelativePath.html" title="RelativePath">RelativePath</a>, as <a href="https://doc.rust-lang.org/std/primitive.str.html">str</a> slices.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RelativePath.html" title='relative_path::RelativePath struct'>RelativePath</a></td><td class='docblock-short'><p>A borrowed, immutable relative path.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RelativePathBuf.html" title='relative_path::RelativePathBuf struct'>RelativePathBuf</a></td><td class='docblock-short'><p>An owned, mutable relative path.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.StripPrefixError.html" title='relative_path::StripPrefixError struct'>StripPrefixError</a></td><td class='docblock-short'><p>An error returned from <a href="../relative_path/struct.RelativePath.html#method.strip_prefix">strip_prefix</a> if the prefix was not found.</p>
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.Component.html" title='relative_path::Component enum'>Component</a></td><td class='docblock-short'><p>A single path component.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.FromPathErrorKind.html" title='relative_path::FromPathErrorKind enum'>FromPathErrorKind</a></td><td class='docblock-short'><p>Error kind for <a href="../relative_path/struct.FromPathError.html" title="FromPathError">FromPathError</a>.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "relative_path";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

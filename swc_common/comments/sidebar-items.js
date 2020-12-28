@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["CommentKind",""]],"struct":[["Comment",""],["SingleThreadedComments","Single-threaded storage for comments."]],"trait":[["Comments","Stores comment."]],"type":[["SingleThreadedCommentsMap",""],["SingleThreadedCommentsMapInner",""]]});

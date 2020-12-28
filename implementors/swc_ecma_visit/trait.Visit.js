@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["swc_ecma_utils"] = [{"text":"impl&lt;'_&gt; Visit for VarCollector&lt;'_&gt;","synthetic":false,"types":[]},{"text":"impl Visit for ThisVisitor","synthetic":false,"types":[]},{"text":"impl&lt;'_&gt; Visit for IdentFinder&lt;'_&gt;","synthetic":false,"types":[]},{"text":"impl Visit for Hoister","synthetic":false,"types":[]},{"text":"impl Visit for RestPatVisitor","synthetic":false,"types":[]},{"text":"impl Visit for LiteralVisitor","synthetic":false,"types":[]},{"text":"impl&lt;'a, I:&nbsp;IdentLike&gt; Visit for DestructuringFinder&lt;'a, I&gt;","synthetic":false,"types":[]},{"text":"impl&lt;'a&gt; Visit for UsageFinder&lt;'a&gt;","synthetic":false,"types":[]}];
+implementors["swc_ecma_visit"] = [];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

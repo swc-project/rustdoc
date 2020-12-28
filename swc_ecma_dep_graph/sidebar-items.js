@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["DependencyKind",""]],"fn":[["analyze_dependencies",""]],"struct":[["DependencyDescriptor",""]]});

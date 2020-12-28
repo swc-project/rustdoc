@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["es2016",""],["exponentation","`@babel/plugin-transform-exponentiation-operator`"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["decorators","Simple class decorator"]],"struct":[["Config",""]]});

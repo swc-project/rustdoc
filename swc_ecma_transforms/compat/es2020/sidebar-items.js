@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["class_properties","Impl note"],["es2020",""],["export_namespace_from",""],["nullish_coalescing",""],["optional_chaining",""],["typescript_class_properties","Class properties pass for the typescript."]]});

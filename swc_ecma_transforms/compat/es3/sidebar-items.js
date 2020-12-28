@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["es3","Make output es3-compatible."],["member_expression_literals","babel: `transform-member-expression-literals`"],["property_literals","babel: `transform-property-literals`"],["reserved_words","babel: `@babel/plugin-transform-reserved-words`"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["fast_path","This macro adds fast-path to the `swc_ecma_visit::Fold` and `swc_ecma_visit::Visit`."]]});

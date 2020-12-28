@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["constant_propagation","This pass is kind of inliner, but it's far faster."]]});

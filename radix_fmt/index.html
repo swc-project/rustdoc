@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `radix_fmt` crate."><meta name="keywords" content="rust, rustlang, rust-lang, radix_fmt"><title>radix_fmt - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../radix_fmt/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate radix_fmt</p><div class='block version'><p>Version 1.0.0</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all radix_fmt's items</p></a><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'radix_fmt', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/radix_fmt/lib.rs.html#1-422' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>radix_fmt</a></span></h1><div class='docblock'><p><a href="https://crates.io/crates/radix_fmt"><img src="https://img.shields.io/crates/v/radix_fmt.svg" alt="Latest Version" /></a>
+<a href="https://docs.rs/radix_fmt"><img src="https://img.shields.io/badge/api-rustdoc-purple.svg" alt="Documentation" /></a></p>
+<p>This crate adds a tool to format a number in an arbitrary base from 2 to 36.</p>
+<p>This is a light crate, without any dependency.</p>
+<p>For primitive signed integers (<code>i8</code> to <code>i128</code>, and <code>isize</code>), negative values are
+formatted as the two’s complement representation.</p>
+<p>There is also one specific function for each radix that does not
+already exists in the standard library, <em>e.g.</em> <a href="fn.radix_3.html"><code>radix_3</code></a>
+to format a number in base 3.</p>
+<h2 id="get-started" class="section-header"><a href="#get-started">Get started</a></h2>
+<p>Add the crate to the cargo manifest:</p>
+<pre><code class="language-toml">radix_fmt = &quot;1&quot;
+</code></pre>
+<p>Import <a href="fn.radix.html"><code>radix</code></a> in scope,
+and you are ready to go:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">radix_fmt</span>::<span class="ident">radix</span>;</pre></div>
+<h2 id="examples" class="section-header"><a href="#examples">Examples</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">radix_fmt</span>::<span class="kw-2">*</span>;
+
+<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="number">35</span>;
+
+<span class="comment">// Ouput: &quot;z&quot;</span>
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">radix</span>(<span class="ident">n</span>, <span class="number">36</span>));
+<span class="comment">// Same ouput: &quot;z&quot;</span>
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">radix_36</span>(<span class="ident">n</span>));</pre></div>
+<p>You can use the <em>alternate</em> modifier to capitalize the letter-digits:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">radix_fmt</span>::<span class="ident">radix</span>;
+
+<span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="number">35</span>;
+
+<span class="comment">// Ouput: &quot;Z&quot;</span>
+<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{:#}&quot;</span>, <span class="ident">radix</span>(<span class="ident">n</span>, <span class="number">36</span>));</pre></div>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.Radix.html" title='radix_fmt::Radix struct'>Radix</a></td><td class='docblock-short'><p>A struct to format a number in an arbitrary radix.</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.radix.html" title='radix_fmt::radix fn'>radix</a></td><td class='docblock-short'><p>A helper for creating a new formatter from
+<a href="struct.Radix.html#method.new"><code>Radix::new</code></a>.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_3.html" title='radix_fmt::radix_3 fn'>radix_3</a></td><td class='docblock-short'><p>Formats a number in base 3.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_4.html" title='radix_fmt::radix_4 fn'>radix_4</a></td><td class='docblock-short'><p>Formats a number in base 4.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_5.html" title='radix_fmt::radix_5 fn'>radix_5</a></td><td class='docblock-short'><p>Formats a number in base 5.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_6.html" title='radix_fmt::radix_6 fn'>radix_6</a></td><td class='docblock-short'><p>Formats a number in base 6.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_7.html" title='radix_fmt::radix_7 fn'>radix_7</a></td><td class='docblock-short'><p>Formats a number in base 7.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_9.html" title='radix_fmt::radix_9 fn'>radix_9</a></td><td class='docblock-short'><p>Formats a number in base 9.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_11.html" title='radix_fmt::radix_11 fn'>radix_11</a></td><td class='docblock-short'><p>Formats a number in base 11.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_12.html" title='radix_fmt::radix_12 fn'>radix_12</a></td><td class='docblock-short'><p>Formats a number in base 12.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_13.html" title='radix_fmt::radix_13 fn'>radix_13</a></td><td class='docblock-short'><p>Formats a number in base 13.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_14.html" title='radix_fmt::radix_14 fn'>radix_14</a></td><td class='docblock-short'><p>Formats a number in base 14.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_15.html" title='radix_fmt::radix_15 fn'>radix_15</a></td><td class='docblock-short'><p>Formats a number in base 15.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_17.html" title='radix_fmt::radix_17 fn'>radix_17</a></td><td class='docblock-short'><p>Formats a number in base 17.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_18.html" title='radix_fmt::radix_18 fn'>radix_18</a></td><td class='docblock-short'><p>Formats a number in base 18.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_19.html" title='radix_fmt::radix_19 fn'>radix_19</a></td><td class='docblock-short'><p>Formats a number in base 19.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_20.html" title='radix_fmt::radix_20 fn'>radix_20</a></td><td class='docblock-short'><p>Formats a number in base 20.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_21.html" title='radix_fmt::radix_21 fn'>radix_21</a></td><td class='docblock-short'><p>Formats a number in base 21.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_22.html" title='radix_fmt::radix_22 fn'>radix_22</a></td><td class='docblock-short'><p>Formats a number in base 22.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_23.html" title='radix_fmt::radix_23 fn'>radix_23</a></td><td class='docblock-short'><p>Formats a number in base 23.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_24.html" title='radix_fmt::radix_24 fn'>radix_24</a></td><td class='docblock-short'><p>Formats a number in base 24.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_25.html" title='radix_fmt::radix_25 fn'>radix_25</a></td><td class='docblock-short'><p>Formats a number in base 25.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_26.html" title='radix_fmt::radix_26 fn'>radix_26</a></td><td class='docblock-short'><p>Formats a number in base 26.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_27.html" title='radix_fmt::radix_27 fn'>radix_27</a></td><td class='docblock-short'><p>Formats a number in base 27.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_28.html" title='radix_fmt::radix_28 fn'>radix_28</a></td><td class='docblock-short'><p>Formats a number in base 28.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_29.html" title='radix_fmt::radix_29 fn'>radix_29</a></td><td class='docblock-short'><p>Formats a number in base 29.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_30.html" title='radix_fmt::radix_30 fn'>radix_30</a></td><td class='docblock-short'><p>Formats a number in base 30.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_31.html" title='radix_fmt::radix_31 fn'>radix_31</a></td><td class='docblock-short'><p>Formats a number in base 31.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_32.html" title='radix_fmt::radix_32 fn'>radix_32</a></td><td class='docblock-short'><p>Formats a number in base 32.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_33.html" title='radix_fmt::radix_33 fn'>radix_33</a></td><td class='docblock-short'><p>Formats a number in base 33.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_34.html" title='radix_fmt::radix_34 fn'>radix_34</a></td><td class='docblock-short'><p>Formats a number in base 34.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_35.html" title='radix_fmt::radix_35 fn'>radix_35</a></td><td class='docblock-short'><p>Formats a number in base 35.</p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.radix_36.html" title='radix_fmt::radix_36 fn'>radix_36</a></td><td class='docblock-short'><p>Formats a number in base 36.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "radix_fmt";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

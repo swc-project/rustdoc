@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Feature",""],["FeatureOrModule",""],["Mode",""],["Query",""],["QueryOrVersion",""],["Targets",""]],"fn":[["preset_env",""]],"struct":[["BrowserData","A map without allocation."],["Config",""],["EsModules",""],["Version",""]],"type":[["Versions",""]]});
