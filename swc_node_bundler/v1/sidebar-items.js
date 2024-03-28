@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["EntryConfig","Mode"],"struct":["AliasConfig","Config","JsCallback","ModuleConfig","OptimizationConfig","OutputConfig","ResolveConfig"]};

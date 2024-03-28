@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ArchivedPluginError","PluginError","PluginErrorResolver"],"struct":["ArchivedVersionedSerializable","PluginSerializedBytes","VersionedSerializable","VersionedSerializableResolver"]};

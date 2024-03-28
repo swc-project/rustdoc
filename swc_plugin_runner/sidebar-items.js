@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_plugin_transform_executor"],"mod":["cache","plugin_module_bytes","wasix_runtime"]};

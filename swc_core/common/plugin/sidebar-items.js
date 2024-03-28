@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["PLUGIN_TRANSFORM_AST_SCHEMA_VERSION"],"mod":["diagnostics","metadata","serialized"]};

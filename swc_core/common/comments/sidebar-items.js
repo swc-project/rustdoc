@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ArchivedCommentKind","CommentKind","CommentKindResolver"],"struct":["ArchivedComment","Comment","CommentResolver","NoopComments","SingleThreadedComments"],"trait":["Comments","CommentsExt"],"type":["SingleThreadedCommentsMap","SingleThreadedCommentsMapInner"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["bump_swc_cli","get_swc_crates_of_bindings","set_version","update_swc_crates"]};
