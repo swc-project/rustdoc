@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_plugin", 0, "Simple substitution for scoped_thread_local with limited …\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.")

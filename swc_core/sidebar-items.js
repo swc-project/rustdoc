@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":["quote","quote_expr"],"mod":["base","common","css","diagnostics","ecma","plugin","quote","trace_macro"],"static":["SWC_CORE_VERSION"]};

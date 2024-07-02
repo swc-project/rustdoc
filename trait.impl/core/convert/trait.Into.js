@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"swc_ecma_utils":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/convert/trait.Into.html\" title=\"trait core::convert::Into\">Into</a>&lt;Expr&gt; for <a class=\"struct\" href=\"swc_ecma_utils/function/struct.FunctionWrapper.html\" title=\"struct swc_ecma_utils::function::FunctionWrapper\">FunctionWrapper</a>&lt;Expr&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

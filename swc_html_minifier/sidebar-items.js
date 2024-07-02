@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["minify_document","minify_document_fragment"],"mod":["option"],"static":["CONDITIONAL_COMMENT_END","CONDITIONAL_COMMENT_START"]};

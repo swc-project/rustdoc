@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["CREDUCE_INPUT_ENV_VAR","CREDUCE_MODE_ENV_VAR"],"enum":["Cmd"],"fn":["init","main"],"mod":["bundle","es","util"],"struct":["AppArgs"]};

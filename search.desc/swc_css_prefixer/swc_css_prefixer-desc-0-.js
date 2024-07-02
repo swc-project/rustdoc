@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_css_prefixer", 0, "This uses <code>ahash</code> directly to reduce build time.\nReturns the argument unchanged.\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.\nCalls <code>U::from(self)</code>.")

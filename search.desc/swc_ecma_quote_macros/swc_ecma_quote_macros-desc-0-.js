@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_ecma_quote_macros", 0, "Don’t invoke this macro directly, use the <code>quote!</code> macro …")

@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_ecma_compat_bugfixes", 0, "Safari 10.3 had an issue where async arrow function …\nConverts destructured parameters with default values to …")

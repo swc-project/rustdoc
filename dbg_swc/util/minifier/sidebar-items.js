@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_esbuild_output","get_minified","get_minified_with_opts","get_terser_output"],"struct":["Normalizer"]};

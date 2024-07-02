@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["run_cargo_clean"],"struct":["CleanCmd"]};

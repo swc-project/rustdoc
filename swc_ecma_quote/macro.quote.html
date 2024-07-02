@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Supported output types"><title>quote in swc_ecma_quote - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-2c208a72533b4dd0.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="swc_ecma_quote" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0-nightly (ccfcd950b 2024-04-15)" data-channel="nightly" data-search-js="search-ffac13a0df2b1870.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../static.files/storage-e32f0c247825364d.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-c97aec732c613ca4.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc macro"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../swc_ecma_quote/index.html">swc_ecma_quote</a><span class="version">0.62.0</span></h2></div><div class="sidebar-elems"></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../swc_ecma_quote/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Macro <a href="index.html">swc_ecma_quote</a>::<wbr><a class="macro" href="#">quote</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../src/swc_ecma_quote/lib.rs.html#104-108">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><span class="macro">macro_rules!</span> quote {
+    ($(<span class="macro-nonterminal">$tt</span>:tt)<span class="kw-2">*</span>) =&gt; { ... };
+}</pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="supported-output-types"><a class="doc-anchor" href="#supported-output-types">§</a>Supported output types</h2>
+<ul>
+<li>
+<p><code>Expr</code></p>
+</li>
+<li>
+<p><code>Pat</code></p>
+</li>
+<li>
+<p><code>AssignTarget</code></p>
+</li>
+<li>
+<p><code>Stmt</code></p>
+</li>
+<li>
+<p><code>ModuleItem</code></p>
+</li>
+<li>
+<p>Option<T> where T is supported type</p>
+</li>
+<li>
+<p>Box<T> where T is supported type</p>
+</li>
+</ul>
+<p>For example, <code>Box&lt;Expr&gt;</code> and <code>Option&lt;Box&lt;Expr&gt;&gt;</code> are supported.</p>
+<h2 id="variable-substitution"><a class="doc-anchor" href="#variable-substitution">§</a>Variable substitution</h2>
+<p>If an identifier starts with <code>$</code>, it is substituted with the value of the
+parameter passed.</p>
+<p>e.g.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>swc_common::DUMMY_SP;
+<span class="kw">use </span>swc_ecma_ast::Ident;
+<span class="kw">use </span>swc_ecma_quote::quote;
+
+<span class="comment">// This will return ast for `const ref = 4;`
+</span><span class="kw">let </span>_stmt = <span class="macro">quote!</span>(<span class="string">"const $name = 4;" </span><span class="kw">as </span>Stmt, name = Ident::new(<span class="string">"ref"</span>.into(), DUMMY_SP));
+
+<span class="comment">// Tip: Use private_ident!("ref") for real identifiers.</span></code></pre></div>
+<h3 id="typed-variables"><a class="doc-anchor" href="#typed-variables">§</a>Typed variables</h3>
+<p>As this macro generates static AST, it can’t substitute variables if an
+identifier is not allowed in such position. In other words, this macro only
+supports substituting</p>
+<ul>
+<li>[swc_ecma_ast::Ident]</li>
+<li>[swc_ecma_ast::Expr]</li>
+<li>[swc_ecma_ast::Pat]</li>
+<li>[swc_ecma_ast::Str]</li>
+</ul>
+<p>You can use it like</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>swc_common::DUMMY_SP;
+<span class="kw">use </span>swc_ecma_ast::Ident;
+<span class="kw">use </span>swc_ecma_quote::quote;
+
+<span class="comment">// This will return ast for `const ref = 4;`
+</span><span class="kw">let </span>_stmt = <span class="macro">quote!</span>(
+                <span class="string">"const $name = $val;" </span><span class="kw">as </span>Stmt,
+                name = Ident::new(<span class="string">"ref"</span>.into(), DUMMY_SP),
+                val: Expr = <span class="number">4</span>.into(),
+            );</code></pre></div>
+<h2 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h2><h3 id="quote-a-variable-declaration"><a class="doc-anchor" href="#quote-a-variable-declaration">§</a>Quote a variable declaration</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>swc_common::DUMMY_SP;
+<span class="kw">use </span>swc_ecma_ast::Ident;
+<span class="kw">use </span>swc_ecma_quote::quote;
+
+<span class="comment">// This will return ast for `const ref = 4;`
+</span><span class="kw">let </span>_stmt = <span class="macro">quote!</span>(<span class="string">"const $name = 4;" </span><span class="kw">as </span>Stmt, name =
+Ident::new(<span class="string">"ref"</span>.into(), DUMMY_SP));
+
+<span class="comment">// Tip: Use private_ident!("ref") for real identifiers.</span></code></pre></div>
+<h3 id="using-str"><a class="doc-anchor" href="#using-str">§</a>Using <code>Str</code></h3>
+<p>The grammar is <code>&quot;$var_name&quot;</code>.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>swc_common::DUMMY_SP;
+<span class="kw">use </span>swc_ecma_ast::Str;
+<span class="kw">use </span>swc_ecma_quote::quote;
+
+<span class="comment">// This will return ast for `import thing from "foo";`
+</span><span class="kw">let </span>_stmt = <span class="macro">quote!</span>(
+                <span class="string">"import thing from \"$thing\";" </span><span class="kw">as </span>ModuleItem,
+                thing: Str = <span class="string">"foo"</span>.into(),
+            );</code></pre></div>
+</div></details></section></div></main></body></html>

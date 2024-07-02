@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":["atom","js_word","lazy_atom"],"struct":["Atom","AtomStore","AtomStoreCell"],"type":["StaticString"]};

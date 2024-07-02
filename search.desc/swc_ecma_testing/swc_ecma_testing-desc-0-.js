@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_ecma_testing", 0, "The arguments passed to the node.js process.\nCache the result of the execution.\nExecutes <code>js_code</code> and capture thw output.\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.\nIf true, <code>--input-type=module</code> will be added.")

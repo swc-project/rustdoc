@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_commit_for_swc_core_version","get_version_of_swc_core_of_commit","repository_root","run_cmd","wrap"],"struct":["CargoLockfile","LockfilePkg"]};
