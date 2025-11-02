@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_css_lints", 0, "A lint rule.\nReturns the argument unchanged.\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.\nCalls <code>U::from(self)</code>.")

@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_releaser", 0, "Returns the argument unchanged.\nReturns the argument unchanged.\nReturns the argument unchanged.\nReturns the argument unchanged.\nDependency graph\nCalls <code>U::from(self)</code>.\nCalls <code>U::from(self)</code>.\nCalls <code>U::from(self)</code>.\nCalls <code>U::from(self)</code>.\nOriginal versions")

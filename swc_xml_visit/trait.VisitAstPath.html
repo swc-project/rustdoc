@@ -1,0 +1,576 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A visitor trait for traversing the AST."><title>VisitAstPath in swc_xml_visit - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-20739d33.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="swc_xml_visit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0-nightly (2e6882ac5 2025-05-05)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../swc_xml_visit/index.html">swc_<wbr>xml_<wbr>visit</a><span class="version">16.0.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Visit<wbr>AstPath</a></h2><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.visit_atom" title="visit_atom">visit_atom</a></li><li><a href="#method.visit_attribute" title="visit_attribute">visit_attribute</a></li><li><a href="#method.visit_attribute_token" title="visit_attribute_token">visit_attribute_token</a></li><li><a href="#method.visit_attribute_tokens" title="visit_attribute_tokens">visit_attribute_tokens</a></li><li><a href="#method.visit_attributes" title="visit_attributes">visit_attributes</a></li><li><a href="#method.visit_cdata_section" title="visit_cdata_section">visit_cdata_section</a></li><li><a href="#method.visit_child" title="visit_child">visit_child</a></li><li><a href="#method.visit_childs" title="visit_childs">visit_childs</a></li><li><a href="#method.visit_comment" title="visit_comment">visit_comment</a></li><li><a href="#method.visit_document" title="visit_document">visit_document</a></li><li><a href="#method.visit_document_mode" title="visit_document_mode">visit_document_mode</a></li><li><a href="#method.visit_document_type" title="visit_document_type">visit_document_type</a></li><li><a href="#method.visit_element" title="visit_element">visit_element</a></li><li><a href="#method.visit_namespace" title="visit_namespace">visit_namespace</a></li><li><a href="#method.visit_opt_atom" title="visit_opt_atom">visit_opt_atom</a></li><li><a href="#method.visit_opt_namespace" title="visit_opt_namespace">visit_opt_namespace</a></li><li><a href="#method.visit_processing_instruction" title="visit_processing_instruction">visit_processing_instruction</a></li><li><a href="#method.visit_span" title="visit_span">visit_span</a></li><li><a href="#method.visit_text" title="visit_text">visit_text</a></li><li><a href="#method.visit_token" title="visit_token">visit_token</a></li><li><a href="#method.visit_token_and_span" title="visit_token_and_span">visit_token_and_span</a></li></ul><h3><a href="#foreign-impls">Implementations on Foreign Types</a></h3><ul class="block"><li><a href="#impl-VisitAstPath-for-%26mut+V" title="&#38;mut V">&#38;mut V</a></li><li><a href="#impl-VisitAstPath-for-Box%3CV%3E" title="Box&#60;V&#62;">Box&#60;V&#62;</a></li><li><a href="#impl-VisitAstPath-for-Either%3CA,+B%3E" title="Either&#60;A, B&#62;">Either&#60;A, B&#62;</a></li><li><a href="#impl-VisitAstPath-for-Optional%3CV%3E" title="Optional&#60;V&#62;">Optional&#60;V&#62;</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate swc_<wbr>xml_<wbr>visit</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">swc_xml_visit</a></div><h1>Trait <span class="trait">VisitAstPath</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/swc_xml_visit/generated.rs.html#1271-1515">Source</a> </span></div><pre class="rust item-decl"><code>pub trait VisitAstPath {
+<details class="toggle type-contents-toggle"><summary class="hideme"><span>Show 21 methods</span></summary>    // Provided methods
+    fn <a href="#method.visit_atom" class="fn">visit_atom</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Atom,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_attribute" class="fn">visit_attribute</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Attribute,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_attribute_token" class="fn">visit_attribute_token</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast AttributeToken,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_attribute_tokens" class="fn">visit_attribute_tokens</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast [AttributeToken],
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_attributes" class="fn">visit_attributes</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast [Attribute],
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_cdata_section" class="fn">visit_cdata_section</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast CdataSection,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_child" class="fn">visit_child</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Child,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_childs" class="fn">visit_childs</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast [Child],
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_comment" class="fn">visit_comment</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Comment,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_document" class="fn">visit_document</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Document,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_document_mode" class="fn">visit_document_mode</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast DocumentMode,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_document_type" class="fn">visit_document_type</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast DocumentType,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_element" class="fn">visit_element</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Element,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_namespace" class="fn">visit_namespace</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Namespace,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_opt_atom" class="fn">visit_opt_atom</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_opt_namespace" class="fn">visit_opt_namespace</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_processing_instruction" class="fn">visit_processing_instruction</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast ProcessingInstruction,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_span" class="fn">visit_span</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Span,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_text" class="fn">visit_text</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Text,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_token" class="fn">visit_token</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast Token,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_token_and_span" class="fn">visit_token_and_span</a>&lt;'ast: 'r, 'r&gt;(
+        &amp;mut self,
+        node: &amp;'ast TokenAndSpan,
+        __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+    ) { ... }
+</details>}</code></pre><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>path</code></strong> only.</div></span><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A visitor trait for traversing the AST.</p>
+</div></details><h2 id="provided-methods" class="section-header">Provided Methods<a href="#provided-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="method.visit_atom" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1276-1284">Source</a><h4 class="code-header">fn <a href="#method.visit_atom" class="fn">visit_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Atom,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>swc_atoms :: Atom</code>.</p>
+<p>By default, this method calls [<code>swc_atoms :: Atom::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_attribute" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1289-1295">Source</a><h4 class="code-header">fn <a href="#method.visit_attribute" class="fn">visit_attribute</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Attribute</code>.</p>
+<p>By default, this method calls [<code>Attribute::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_attribute_token" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1300-1308">Source</a><h4 class="code-header">fn <a href="#method.visit_attribute_token" class="fn">visit_attribute_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>AttributeToken</code>.</p>
+<p>By default, this method calls [<code>AttributeToken::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_attribute_tokens" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1313-1321">Source</a><h4 class="code-header">fn <a href="#method.visit_attribute_tokens" class="fn">visit_attribute_tokens</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [AttributeToken],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; AttributeToken &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; AttributeToken &gt;::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_attributes" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1326-1334">Source</a><h4 class="code-header">fn <a href="#method.visit_attributes" class="fn">visit_attributes</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Attribute],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Attribute &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Attribute &gt;::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_cdata_section" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1339-1347">Source</a><h4 class="code-header">fn <a href="#method.visit_cdata_section" class="fn">visit_cdata_section</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CdataSection</code>.</p>
+<p>By default, this method calls [<code>CdataSection::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_child" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1352-1354">Source</a><h4 class="code-header">fn <a href="#method.visit_child" class="fn">visit_child</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Child,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Child</code>.</p>
+<p>By default, this method calls [<code>Child::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_childs" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1359-1365">Source</a><h4 class="code-header">fn <a href="#method.visit_childs" class="fn">visit_childs</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Child],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Child &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Child &gt;::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_comment" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1370-1376">Source</a><h4 class="code-header">fn <a href="#method.visit_comment" class="fn">visit_comment</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Comment</code>.</p>
+<p>By default, this method calls [<code>Comment::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_document" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1381-1387">Source</a><h4 class="code-header">fn <a href="#method.visit_document" class="fn">visit_document</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Document</code>.</p>
+<p>By default, this method calls [<code>Document::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_document_mode" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1392-1400">Source</a><h4 class="code-header">fn <a href="#method.visit_document_mode" class="fn">visit_document_mode</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>DocumentMode</code>.</p>
+<p>By default, this method calls [<code>DocumentMode::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_document_type" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1405-1413">Source</a><h4 class="code-header">fn <a href="#method.visit_document_type" class="fn">visit_document_type</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>DocumentType</code>.</p>
+<p>By default, this method calls [<code>DocumentType::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_element" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1418-1424">Source</a><h4 class="code-header">fn <a href="#method.visit_element" class="fn">visit_element</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Element</code>.</p>
+<p>By default, this method calls [<code>Element::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_namespace" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1429-1435">Source</a><h4 class="code-header">fn <a href="#method.visit_namespace" class="fn">visit_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Namespace</code>.</p>
+<p>By default, this method calls [<code>Namespace::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_opt_atom" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1440-1448">Source</a><h4 class="code-header">fn <a href="#method.visit_opt_atom" class="fn">visit_opt_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Option &lt; swc_atoms :: Atom &gt;</code>.</p>
+<p>By default, this method calls [<code>Option &lt; swc_atoms :: Atom &gt;::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_opt_namespace" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1453-1461">Source</a><h4 class="code-header">fn <a href="#method.visit_opt_namespace" class="fn">visit_opt_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Option &lt; Namespace &gt;</code>.</p>
+<p>By default, this method calls [<code>Option &lt; Namespace &gt;::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_processing_instruction" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1466-1474">Source</a><h4 class="code-header">fn <a href="#method.visit_processing_instruction" class="fn">visit_processing_instruction</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>ProcessingInstruction</code>.</p>
+<p>By default, this method calls [<code>ProcessingInstruction::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_span" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1479-1487">Source</a><h4 class="code-header">fn <a href="#method.visit_span" class="fn">visit_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Span,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>swc_common :: Span</code>.</p>
+<p>By default, this method calls [<code>swc_common :: Span::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_text" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1492-1494">Source</a><h4 class="code-header">fn <a href="#method.visit_text" class="fn">visit_text</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Text,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Text</code>.</p>
+<p>By default, this method calls [<code>Text::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_token" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1499-1501">Source</a><h4 class="code-header">fn <a href="#method.visit_token" class="fn">visit_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Token,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Token</code>.</p>
+<p>By default, this method calls [<code>Token::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_token_and_span" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1506-1514">Source</a><h4 class="code-header">fn <a href="#method.visit_token_and_span" class="fn">visit_token_and_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>TokenAndSpan</code>.</p>
+<p>By default, this method calls [<code>TokenAndSpan::visit_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details></div><h2 id="foreign-impls" class="section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor">§</a></h2><details class="toggle implementors-toggle"><summary><section id="impl-VisitAstPath-for-Either%3CA,+B%3E" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1884-2206">Source</a><a href="#impl-VisitAstPath-for-Either%3CA,+B%3E" class="anchor">§</a><h3 class="code-header">impl&lt;A, B&gt; <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a> for <a class="enum" href="https://docs.rs/either/1/either/enum.Either.html" title="enum either::Either">Either</a>&lt;A, B&gt;<div class="where">where
+    A: <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a>,
+    B: <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_atom-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1890-1901">Source</a><a href="#method.visit_atom-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_atom" class="fn">visit_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Atom,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1904-1917">Source</a><a href="#method.visit_attribute-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute" class="fn">visit_attribute</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_token-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1920-1933">Source</a><a href="#method.visit_attribute_token-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_token" class="fn">visit_attribute_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_tokens-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1936-1949">Source</a><a href="#method.visit_attribute_tokens-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_tokens" class="fn">visit_attribute_tokens</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [AttributeToken],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attributes-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1952-1965">Source</a><a href="#method.visit_attributes-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attributes" class="fn">visit_attributes</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Attribute],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_cdata_section-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1968-1981">Source</a><a href="#method.visit_cdata_section-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_cdata_section" class="fn">visit_cdata_section</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_child-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1984-1993">Source</a><a href="#method.visit_child-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_child" class="fn">visit_child</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Child,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_childs-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1996-2009">Source</a><a href="#method.visit_childs-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_childs" class="fn">visit_childs</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Child],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_comment-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2012-2025">Source</a><a href="#method.visit_comment-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_comment" class="fn">visit_comment</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2028-2041">Source</a><a href="#method.visit_document-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document" class="fn">visit_document</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_mode-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2044-2057">Source</a><a href="#method.visit_document_mode-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_mode" class="fn">visit_document_mode</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_type-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2060-2073">Source</a><a href="#method.visit_document_type-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_type" class="fn">visit_document_type</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_element-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2076-2089">Source</a><a href="#method.visit_element-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_element" class="fn">visit_element</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_namespace-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2092-2105">Source</a><a href="#method.visit_namespace-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_namespace" class="fn">visit_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_atom-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2108-2121">Source</a><a href="#method.visit_opt_atom-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_atom" class="fn">visit_opt_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_namespace-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2124-2137">Source</a><a href="#method.visit_opt_namespace-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_namespace" class="fn">visit_opt_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_processing_instruction-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2140-2153">Source</a><a href="#method.visit_processing_instruction-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_processing_instruction" class="fn">visit_processing_instruction</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_span-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2156-2167">Source</a><a href="#method.visit_span-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_span" class="fn">visit_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Span,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_text-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2170-2177">Source</a><a href="#method.visit_text-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_text" class="fn">visit_text</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Text,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2180-2189">Source</a><a href="#method.visit_token-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token" class="fn">visit_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Token,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token_and_span-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2192-2205">Source</a><a href="#method.visit_token_and_span-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token_and_span" class="fn">visit_token_and_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VisitAstPath-for-%26mut+V" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1518-1698">Source</a><a href="#impl-VisitAstPath-for-%26mut+V" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut V</a><div class="where">where
+    V: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_atom-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1523-1529">Source</a><a href="#method.visit_atom-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_atom" class="fn">visit_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Atom,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1532-1538">Source</a><a href="#method.visit_attribute-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute" class="fn">visit_attribute</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_token-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1541-1547">Source</a><a href="#method.visit_attribute_token-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_token" class="fn">visit_attribute_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_tokens-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1550-1556">Source</a><a href="#method.visit_attribute_tokens-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_tokens" class="fn">visit_attribute_tokens</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [AttributeToken],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attributes-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1559-1565">Source</a><a href="#method.visit_attributes-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attributes" class="fn">visit_attributes</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Attribute],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_cdata_section-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1568-1574">Source</a><a href="#method.visit_cdata_section-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_cdata_section" class="fn">visit_cdata_section</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_child-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1577-1579">Source</a><a href="#method.visit_child-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_child" class="fn">visit_child</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Child,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_childs-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1582-1588">Source</a><a href="#method.visit_childs-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_childs" class="fn">visit_childs</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Child],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_comment-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1591-1597">Source</a><a href="#method.visit_comment-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_comment" class="fn">visit_comment</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1600-1606">Source</a><a href="#method.visit_document-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document" class="fn">visit_document</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_mode-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1609-1615">Source</a><a href="#method.visit_document_mode-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_mode" class="fn">visit_document_mode</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_type-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1618-1624">Source</a><a href="#method.visit_document_type-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_type" class="fn">visit_document_type</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_element-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1627-1633">Source</a><a href="#method.visit_element-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_element" class="fn">visit_element</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_namespace-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1636-1642">Source</a><a href="#method.visit_namespace-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_namespace" class="fn">visit_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_atom-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1645-1651">Source</a><a href="#method.visit_opt_atom-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_atom" class="fn">visit_opt_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_namespace-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1654-1660">Source</a><a href="#method.visit_opt_namespace-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_namespace" class="fn">visit_opt_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_processing_instruction-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1663-1669">Source</a><a href="#method.visit_processing_instruction-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_processing_instruction" class="fn">visit_processing_instruction</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_span-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1672-1678">Source</a><a href="#method.visit_span-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_span" class="fn">visit_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Span,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_text-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1681-1683">Source</a><a href="#method.visit_text-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_text" class="fn">visit_text</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Text,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1686-1688">Source</a><a href="#method.visit_token-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token" class="fn">visit_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Token,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token_and_span-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1691-1697">Source</a><a href="#method.visit_token_and_span-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token_and_span" class="fn">visit_token_and_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VisitAstPath-for-Box%3CV%3E" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1701-1881">Source</a><a href="#impl-VisitAstPath-for-Box%3CV%3E" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;V&gt;<div class="where">where
+    V: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_atom-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1706-1712">Source</a><a href="#method.visit_atom-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_atom" class="fn">visit_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Atom,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1715-1721">Source</a><a href="#method.visit_attribute-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute" class="fn">visit_attribute</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_token-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1724-1730">Source</a><a href="#method.visit_attribute_token-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_token" class="fn">visit_attribute_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_tokens-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1733-1739">Source</a><a href="#method.visit_attribute_tokens-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_tokens" class="fn">visit_attribute_tokens</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [AttributeToken],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attributes-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1742-1748">Source</a><a href="#method.visit_attributes-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attributes" class="fn">visit_attributes</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Attribute],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_cdata_section-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1751-1757">Source</a><a href="#method.visit_cdata_section-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_cdata_section" class="fn">visit_cdata_section</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_child-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1760-1762">Source</a><a href="#method.visit_child-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_child" class="fn">visit_child</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Child,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_childs-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1765-1771">Source</a><a href="#method.visit_childs-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_childs" class="fn">visit_childs</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Child],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_comment-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1774-1780">Source</a><a href="#method.visit_comment-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_comment" class="fn">visit_comment</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1783-1789">Source</a><a href="#method.visit_document-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document" class="fn">visit_document</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_mode-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1792-1798">Source</a><a href="#method.visit_document_mode-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_mode" class="fn">visit_document_mode</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_type-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1801-1807">Source</a><a href="#method.visit_document_type-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_type" class="fn">visit_document_type</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_element-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1810-1816">Source</a><a href="#method.visit_element-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_element" class="fn">visit_element</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_namespace-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1819-1825">Source</a><a href="#method.visit_namespace-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_namespace" class="fn">visit_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_atom-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1828-1834">Source</a><a href="#method.visit_opt_atom-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_atom" class="fn">visit_opt_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_namespace-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1837-1843">Source</a><a href="#method.visit_opt_namespace-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_namespace" class="fn">visit_opt_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_processing_instruction-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1846-1852">Source</a><a href="#method.visit_processing_instruction-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_processing_instruction" class="fn">visit_processing_instruction</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_span-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1855-1861">Source</a><a href="#method.visit_span-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_span" class="fn">visit_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Span,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_text-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1864-1866">Source</a><a href="#method.visit_text-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_text" class="fn">visit_text</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Text,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1869-1871">Source</a><a href="#method.visit_token-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token" class="fn">visit_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Token,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token_and_span-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#1874-1880">Source</a><a href="#method.visit_token_and_span-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token_and_span" class="fn">visit_token_and_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VisitAstPath-for-Optional%3CV%3E" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2209-2452">Source</a><a href="#impl-VisitAstPath-for-Optional%3CV%3E" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a> for Optional&lt;V&gt;<div class="where">where
+    V: <a class="trait" href="trait.VisitAstPath.html" title="trait swc_xml_visit::VisitAstPath">VisitAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_atom-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2214-2223">Source</a><a href="#method.visit_atom-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_atom" class="fn">visit_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Atom,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2226-2235">Source</a><a href="#method.visit_attribute-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute" class="fn">visit_attribute</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_token-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2238-2247">Source</a><a href="#method.visit_attribute_token-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_token" class="fn">visit_attribute_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attribute_tokens-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2250-2259">Source</a><a href="#method.visit_attribute_tokens-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attribute_tokens" class="fn">visit_attribute_tokens</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [AttributeToken],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_attributes-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2262-2271">Source</a><a href="#method.visit_attributes-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_attributes" class="fn">visit_attributes</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Attribute],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_cdata_section-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2274-2283">Source</a><a href="#method.visit_cdata_section-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_cdata_section" class="fn">visit_cdata_section</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_child-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2286-2291">Source</a><a href="#method.visit_child-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_child" class="fn">visit_child</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Child,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_childs-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2294-2303">Source</a><a href="#method.visit_childs-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_childs" class="fn">visit_childs</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast [Child],
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_comment-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2306-2315">Source</a><a href="#method.visit_comment-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_comment" class="fn">visit_comment</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2318-2327">Source</a><a href="#method.visit_document-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document" class="fn">visit_document</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_mode-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2330-2339">Source</a><a href="#method.visit_document_mode-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_mode" class="fn">visit_document_mode</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_document_type-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2342-2351">Source</a><a href="#method.visit_document_type-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_document_type" class="fn">visit_document_type</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_element-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2354-2363">Source</a><a href="#method.visit_element-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_element" class="fn">visit_element</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_namespace-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2366-2375">Source</a><a href="#method.visit_namespace-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_namespace" class="fn">visit_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_atom-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2378-2387">Source</a><a href="#method.visit_opt_atom-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_atom" class="fn">visit_opt_atom</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_opt_namespace-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2390-2399">Source</a><a href="#method.visit_opt_namespace-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_opt_namespace" class="fn">visit_opt_namespace</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_processing_instruction-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2402-2411">Source</a><a href="#method.visit_processing_instruction-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_processing_instruction" class="fn">visit_processing_instruction</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_span-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2414-2423">Source</a><a href="#method.visit_span-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_span" class="fn">visit_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Span,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_text-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2426-2431">Source</a><a href="#method.visit_text-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_text" class="fn">visit_text</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Text,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2434-2439">Source</a><a href="#method.visit_token-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token" class="fn">visit_token</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast Token,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section><section id="method.visit_token_and_span-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#2442-2451">Source</a><a href="#method.visit_token_and_span-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_token_and_span" class="fn">visit_token_and_span</a>&lt;'ast: 'r, 'r&gt;(
+    &amp;mut self,
+    node: &amp;'ast TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstNodePath.html" title="type swc_xml_visit::AstNodePath">AstNodePath</a>&lt;'r&gt;,
+)</h4></section></div></details><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"></div><script src="../trait.impl/swc_xml_visit/generated/trait.VisitAstPath.js" data-ignore-extern-crates="alloc,either,swc_visit" async></script></section></div></main></body></html>

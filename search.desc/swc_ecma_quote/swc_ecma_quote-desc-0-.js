@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_ecma_quote", 0, "Supported output types\nCreates a <code>Box&lt;Expr&gt;</code> from the source code.")

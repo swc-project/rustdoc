@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["jsdoc",[["impl&lt;'a&gt; Compare&lt;&amp;'a <a class=\"primitive\" href=\"https://doc.rust-lang.org/nightly/std/primitive.str.html\">str</a>&gt; for <a class=\"struct\" href=\"jsdoc/struct.Input.html\" title=\"struct jsdoc::Input\">Input</a>&lt;'_&gt;"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[257]}

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"attr":["fixture"],"fn":["diff","find_executable","init","print_left_right","run_test","run_test2","unignore_fixture"],"macro":["assert_eq","assert_eq_ignore_span","assert_ne"],"mod":["json"],"static":["CARGO_TARGET_DIR","CARGO_WORKSPACE_ROOT"],"struct":["DebugUsingDisplay","NormalizedOutput","TestOutput","Tester"],"type":["StdErr","StdOut"]};

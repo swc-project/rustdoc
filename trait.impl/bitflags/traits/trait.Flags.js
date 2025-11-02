@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["swc_css_compat",[["impl Flags for <a class=\"struct\" href=\"swc_css_compat/feature/struct.Features.html\" title=\"struct swc_css_compat::feature::Features\">Features</a>"]]],["swc_ecma_ast",[["impl Flags for <a class=\"struct\" href=\"swc_ecma_ast/struct.ListFormat.html\" title=\"struct swc_ecma_ast::ListFormat\">ListFormat</a>"]]],["swc_ecma_compiler",[["impl Flags for <a class=\"struct\" href=\"swc_ecma_compiler/struct.Features.html\" title=\"struct swc_ecma_compiler::Features\">Features</a>"]]],["swc_ecma_lexer",[["impl Flags for <a class=\"struct\" href=\"swc_ecma_lexer/common/context/struct.Context.html\" title=\"struct swc_ecma_lexer::common::context::Context\">Context</a>"],["impl Flags for <a class=\"struct\" href=\"swc_ecma_lexer/lexer/struct.TokenFlags.html\" title=\"struct swc_ecma_lexer::lexer::TokenFlags\">TokenFlags</a>"]]],["swc_ecma_parser",[["impl Flags for <a class=\"struct\" href=\"swc_ecma_parser/struct.Context.html\" title=\"struct swc_ecma_parser::Context\">Context</a>"],["impl Flags for <a class=\"struct\" href=\"swc_ecma_parser/struct.SyntaxFlags.html\" title=\"struct swc_ecma_parser::SyntaxFlags\">SyntaxFlags</a>"]]],["swc_ecma_regexp_ast",[["impl Flags for <a class=\"struct\" href=\"swc_ecma_regexp_ast/struct.Modifier.html\" title=\"struct swc_ecma_regexp_ast::Modifier\">Modifier</a>"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[176,160,169,347,310,175]}

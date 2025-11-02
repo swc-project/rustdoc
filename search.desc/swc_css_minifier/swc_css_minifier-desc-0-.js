@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_css_minifier", 0, "Returns the argument unchanged.\nCalls <code>U::from(self)</code>.")

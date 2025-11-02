@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["AstParentKind","AstParentNodeRef","NodeRef"],"mod":["fields"],"struct":["All"],"trait":["Fold","FoldAstPath","FoldWith","FoldWithAstPath","Visit","VisitAstPath","VisitMut","VisitMutAstPath","VisitMutWith","VisitMutWithAstPath","VisitWith","VisitWithAstPath"],"type":["AstKindPath","AstNodePath"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["MinifierCommand"],"mod":["compare","compare_opts","ensure_size","next","reduce"]};

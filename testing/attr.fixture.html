@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Create tests from files."><title>fixture in testing - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-20739d33.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="testing" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0-nightly (2e6882ac5 2025-05-05)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc attr"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../testing/index.html">testing</a><span class="version">17.0.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">fixture</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#why" title="Why">Why</a></li><li><a href="#usage" title="Usage">Usage</a></li><li><a href="#return-value" title="Return value">Return value</a><ul><li><a href="#ignoring-a-test" title="Ignoring a test">Ignoring a test</a></li></ul></li><li><a href="#roadmap" title="Roadmap">Roadmap</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate testing</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">testing</a></div><h1>Attribute Macro <span class="attr">fixture</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/testing_macros/lib.rs.html#55">Source</a> </span></div><pre class="rust item-decl"><code>#[fixture]</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Create tests from files.</p>
+<p><strong>NOTE: Path should be relative to the directory of <code>Cargo.toml</code> file</strong>.
+This is limitation of current proc macro api.</p>
+<h2 id="why"><a class="doc-anchor" href="#why">§</a>Why</h2>
+<p>If you create test dynamically, running a specific test become very
+cumbersome.</p>
+<p>For example, if you use <code>test</code> crate with nightly, you can’t use <code>cargo test foo</code> to run tests with name containing <code>foo</code>. Instead, you have to implement
+your own ignoring logic</p>
+<h2 id="usage"><a class="doc-anchor" href="#usage">§</a>Usage</h2>
+<p>If you want to load all typescript files from <code>pass</code></p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code> 
+<span class="attr">#[fixture(<span class="string">"pass/**/*.{ts,tsx}"</span>)]
+</span><span class="kw">fn </span>pass(file: PathBuf) {
+    <span class="comment">// test by reading file
+</span>}</code></pre></div>
+<h2 id="return-value"><a class="doc-anchor" href="#return-value">§</a>Return value</h2>
+<p>The function is allowed to return <code>Result</code> on error. If it’s the case</p>
+<h3 id="ignoring-a-test"><a class="doc-anchor" href="#ignoring-a-test">§</a>Ignoring a test</h3>
+<p>If the path to the file contains a component starts with <code>.</code> (dot), it will
+be ignore. This convention is widely used in many projects (including other
+languages), as a file or a directory starting with <code>.</code> means hidden file in
+unix system.</p>
+<p>Note that they are added as a test <code>#[ignore]</code>, so you can use
+<code>cargo test -- --ignored</code> or <code>cargo test -- --include-ignored</code> to run those
+tests.</p>
+<h2 id="roadmap"><a class="doc-anchor" href="#roadmap">§</a>Roadmap</h2>
+<ul>
+<li>Support async function</li>
+</ul>
+</div></details></section></div></main></body></html>

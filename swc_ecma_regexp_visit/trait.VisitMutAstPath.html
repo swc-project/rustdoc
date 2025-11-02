@@ -1,0 +1,885 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A visitor trait for traversing the AST."><title>VisitMutAstPath in swc_ecma_regexp_visit - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-20739d33.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="swc_ecma_regexp_visit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0-nightly (2e6882ac5 2025-05-05)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../swc_ecma_regexp_visit/index.html">swc_<wbr>ecma_<wbr>regexp_<wbr>visit</a><span class="version">0.5.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Visit<wbr>MutAst<wbr>Path</a></h2><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.visit_mut_alternative" title="visit_mut_alternative">visit_mut_alternative</a></li><li><a href="#method.visit_mut_alternatives" title="visit_mut_alternatives">visit_mut_alternatives</a></li><li><a href="#method.visit_mut_atom" title="visit_mut_atom">visit_mut_atom</a></li><li><a href="#method.visit_mut_boundary_assertion" title="visit_mut_boundary_assertion">visit_mut_boundary_assertion</a></li><li><a href="#method.visit_mut_boundary_assertion_kind" title="visit_mut_boundary_assertion_kind">visit_mut_boundary_assertion_kind</a></li><li><a href="#method.visit_mut_capturing_group" title="visit_mut_capturing_group">visit_mut_capturing_group</a></li><li><a href="#method.visit_mut_character" title="visit_mut_character">visit_mut_character</a></li><li><a href="#method.visit_mut_character_class" title="visit_mut_character_class">visit_mut_character_class</a></li><li><a href="#method.visit_mut_character_class_contents" title="visit_mut_character_class_contents">visit_mut_character_class_contents</a></li><li><a href="#method.visit_mut_character_class_contents_kind" title="visit_mut_character_class_contents_kind">visit_mut_character_class_contents_kind</a></li><li><a href="#method.visit_mut_character_class_contentss" title="visit_mut_character_class_contentss">visit_mut_character_class_contentss</a></li><li><a href="#method.visit_mut_character_class_escape" title="visit_mut_character_class_escape">visit_mut_character_class_escape</a></li><li><a href="#method.visit_mut_character_class_escape_kind" title="visit_mut_character_class_escape_kind">visit_mut_character_class_escape_kind</a></li><li><a href="#method.visit_mut_character_class_range" title="visit_mut_character_class_range">visit_mut_character_class_range</a></li><li><a href="#method.visit_mut_character_kind" title="visit_mut_character_kind">visit_mut_character_kind</a></li><li><a href="#method.visit_mut_characters" title="visit_mut_characters">visit_mut_characters</a></li><li><a href="#method.visit_mut_class_string" title="visit_mut_class_string">visit_mut_class_string</a></li><li><a href="#method.visit_mut_class_string_disjunction" title="visit_mut_class_string_disjunction">visit_mut_class_string_disjunction</a></li><li><a href="#method.visit_mut_class_strings" title="visit_mut_class_strings">visit_mut_class_strings</a></li><li><a href="#method.visit_mut_disjunction" title="visit_mut_disjunction">visit_mut_disjunction</a></li><li><a href="#method.visit_mut_dot" title="visit_mut_dot">visit_mut_dot</a></li><li><a href="#method.visit_mut_ignore_group" title="visit_mut_ignore_group">visit_mut_ignore_group</a></li><li><a href="#method.visit_mut_indexed_reference" title="visit_mut_indexed_reference">visit_mut_indexed_reference</a></li><li><a href="#method.visit_mut_look_around_assertion" title="visit_mut_look_around_assertion">visit_mut_look_around_assertion</a></li><li><a href="#method.visit_mut_look_around_assertion_kind" title="visit_mut_look_around_assertion_kind">visit_mut_look_around_assertion_kind</a></li><li><a href="#method.visit_mut_modifier" title="visit_mut_modifier">visit_mut_modifier</a></li><li><a href="#method.visit_mut_modifiers" title="visit_mut_modifiers">visit_mut_modifiers</a></li><li><a href="#method.visit_mut_named_reference" title="visit_mut_named_reference">visit_mut_named_reference</a></li><li><a href="#method.visit_mut_opt_atom" title="visit_mut_opt_atom">visit_mut_opt_atom</a></li><li><a href="#method.visit_mut_opt_modifiers" title="visit_mut_opt_modifiers">visit_mut_opt_modifiers</a></li><li><a href="#method.visit_mut_pattern" title="visit_mut_pattern">visit_mut_pattern</a></li><li><a href="#method.visit_mut_quantifier" title="visit_mut_quantifier">visit_mut_quantifier</a></li><li><a href="#method.visit_mut_span" title="visit_mut_span">visit_mut_span</a></li><li><a href="#method.visit_mut_term" title="visit_mut_term">visit_mut_term</a></li><li><a href="#method.visit_mut_terms" title="visit_mut_terms">visit_mut_terms</a></li><li><a href="#method.visit_mut_unicode_property_escape" title="visit_mut_unicode_property_escape">visit_mut_unicode_property_escape</a></li></ul><h3><a href="#foreign-impls">Implementations on Foreign Types</a></h3><ul class="block"><li><a href="#impl-VisitMutAstPath-for-%26mut+V" title="&#38;mut V">&#38;mut V</a></li><li><a href="#impl-VisitMutAstPath-for-Box%3CV%3E" title="Box&#60;V&#62;">Box&#60;V&#62;</a></li><li><a href="#impl-VisitMutAstPath-for-Either%3CA,+B%3E" title="Either&#60;A, B&#62;">Either&#60;A, B&#62;</a></li><li><a href="#impl-VisitMutAstPath-for-Optional%3CV%3E" title="Optional&#60;V&#62;">Optional&#60;V&#62;</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate swc_<wbr>ecma_<wbr>regexp_<wbr>visit</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">swc_ecma_regexp_visit</a></div><h1>Trait <span class="trait">VisitMutAstPath</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/swc_ecma_regexp_visit/generated.rs.html#7712-8115">Source</a> </span></div><pre class="rust item-decl"><code>pub trait VisitMutAstPath {
+<details class="toggle type-contents-toggle"><summary class="hideme"><span>Show 36 methods</span></summary>    // Provided methods
+    fn <a href="#method.visit_mut_alternative" class="fn">visit_mut_alternative</a>(
+        &amp;mut self,
+        node: &amp;mut Alternative,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_alternatives" class="fn">visit_mut_alternatives</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Alternative&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_atom" class="fn">visit_mut_atom</a>(&amp;mut self, node: &amp;mut Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_boundary_assertion" class="fn">visit_mut_boundary_assertion</a>(
+        &amp;mut self,
+        node: &amp;mut BoundaryAssertion,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_boundary_assertion_kind" class="fn">visit_mut_boundary_assertion_kind</a>(
+        &amp;mut self,
+        node: &amp;mut BoundaryAssertionKind,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_capturing_group" class="fn">visit_mut_capturing_group</a>(
+        &amp;mut self,
+        node: &amp;mut CapturingGroup,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character" class="fn">visit_mut_character</a>(
+        &amp;mut self,
+        node: &amp;mut Character,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class" class="fn">visit_mut_character_class</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterClass,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class_contents" class="fn">visit_mut_character_class_contents</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterClassContents,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class_contents_kind" class="fn">visit_mut_character_class_contents_kind</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterClassContentsKind,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class_contentss" class="fn">visit_mut_character_class_contentss</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;CharacterClassContents&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class_escape" class="fn">visit_mut_character_class_escape</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterClassEscape,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class_escape_kind" class="fn">visit_mut_character_class_escape_kind</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterClassEscapeKind,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_class_range" class="fn">visit_mut_character_class_range</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterClassRange,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_character_kind" class="fn">visit_mut_character_kind</a>(
+        &amp;mut self,
+        node: &amp;mut CharacterKind,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_characters" class="fn">visit_mut_characters</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Character&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_class_string" class="fn">visit_mut_class_string</a>(
+        &amp;mut self,
+        node: &amp;mut ClassString,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_class_string_disjunction" class="fn">visit_mut_class_string_disjunction</a>(
+        &amp;mut self,
+        node: &amp;mut ClassStringDisjunction,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_class_strings" class="fn">visit_mut_class_strings</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;ClassString&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_disjunction" class="fn">visit_mut_disjunction</a>(
+        &amp;mut self,
+        node: &amp;mut Disjunction,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_dot" class="fn">visit_mut_dot</a>(&amp;mut self, node: &amp;mut Dot, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_ignore_group" class="fn">visit_mut_ignore_group</a>(
+        &amp;mut self,
+        node: &amp;mut IgnoreGroup,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_indexed_reference" class="fn">visit_mut_indexed_reference</a>(
+        &amp;mut self,
+        node: &amp;mut IndexedReference,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_look_around_assertion" class="fn">visit_mut_look_around_assertion</a>(
+        &amp;mut self,
+        node: &amp;mut LookAroundAssertion,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_look_around_assertion_kind" class="fn">visit_mut_look_around_assertion_kind</a>(
+        &amp;mut self,
+        node: &amp;mut LookAroundAssertionKind,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_modifier" class="fn">visit_mut_modifier</a>(
+        &amp;mut self,
+        node: &amp;mut Modifier,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_modifiers" class="fn">visit_mut_modifiers</a>(
+        &amp;mut self,
+        node: &amp;mut Modifiers,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_named_reference" class="fn">visit_mut_named_reference</a>(
+        &amp;mut self,
+        node: &amp;mut NamedReference,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_opt_atom" class="fn">visit_mut_opt_atom</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_opt_modifiers" class="fn">visit_mut_opt_modifiers</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Modifiers&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_pattern" class="fn">visit_mut_pattern</a>(
+        &amp;mut self,
+        node: &amp;mut Pattern,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_quantifier" class="fn">visit_mut_quantifier</a>(
+        &amp;mut self,
+        node: &amp;mut Quantifier,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_span" class="fn">visit_mut_span</a>(&amp;mut self, node: &amp;mut Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_term" class="fn">visit_mut_term</a>(&amp;mut self, node: &amp;mut Term, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_terms" class="fn">visit_mut_terms</a>(
+        &amp;mut self,
+        node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Term&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+<span class="item-spacer"></span>    fn <a href="#method.visit_mut_unicode_property_escape" class="fn">visit_mut_unicode_property_escape</a>(
+        &amp;mut self,
+        node: &amp;mut UnicodePropertyEscape,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+    ) { ... }
+</details>}</code></pre><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>path</code></strong> only.</div></span><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A visitor trait for traversing the AST.</p>
+</div></details><h2 id="provided-methods" class="section-header">Provided Methods<a href="#provided-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="method.visit_mut_alternative" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7717-7721">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_alternative" class="fn">visit_mut_alternative</a>(
+    &amp;mut self,
+    node: &amp;mut Alternative,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Alternative</code>.</p>
+<p>By default, this method calls [<code>Alternative::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_alternatives" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7726-7734">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_alternatives" class="fn">visit_mut_alternatives</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Alternative&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Alternative &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Alternative &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_atom" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7739-7743">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_atom" class="fn">visit_mut_atom</a>(&amp;mut self, node: &amp;mut Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>swc_atoms :: Atom</code>.</p>
+<p>By default, this method calls [<code>swc_atoms :: Atom::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_boundary_assertion" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7748-7756">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion" class="fn">visit_mut_boundary_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>BoundaryAssertion</code>.</p>
+<p>By default, this method calls [<code>BoundaryAssertion::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_boundary_assertion_kind" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7761-7769">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion_kind" class="fn">visit_mut_boundary_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>BoundaryAssertionKind</code>.</p>
+<p>By default, this method calls [<code>BoundaryAssertionKind::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_capturing_group" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7774-7782">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_capturing_group" class="fn">visit_mut_capturing_group</a>(
+    &amp;mut self,
+    node: &amp;mut CapturingGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CapturingGroup</code>.</p>
+<p>By default, this method calls [<code>CapturingGroup::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7787-7791">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character" class="fn">visit_mut_character</a>(
+    &amp;mut self,
+    node: &amp;mut Character,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Character</code>.</p>
+<p>By default, this method calls [<code>Character::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7796-7804">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class" class="fn">visit_mut_character_class</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClass,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterClass</code>.</p>
+<p>By default, this method calls [<code>CharacterClass::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class_contents" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7809-7817">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents" class="fn">visit_mut_character_class_contents</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContents,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterClassContents</code>.</p>
+<p>By default, this method calls [<code>CharacterClassContents::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class_contents_kind" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7822-7830">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents_kind" class="fn">visit_mut_character_class_contents_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContentsKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterClassContentsKind</code>.</p>
+<p>By default, this method calls [<code>CharacterClassContentsKind::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class_contentss" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7835-7843">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contentss" class="fn">visit_mut_character_class_contentss</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;CharacterClassContents&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; CharacterClassContents &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; CharacterClassContents &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class_escape" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7848-7856">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape" class="fn">visit_mut_character_class_escape</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterClassEscape</code>.</p>
+<p>By default, this method calls [<code>CharacterClassEscape::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class_escape_kind" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7861-7869">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape_kind" class="fn">visit_mut_character_class_escape_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscapeKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterClassEscapeKind</code>.</p>
+<p>By default, this method calls [<code>CharacterClassEscapeKind::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_class_range" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7874-7882">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_range" class="fn">visit_mut_character_class_range</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassRange,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterClassRange</code>.</p>
+<p>By default, this method calls [<code>CharacterClassRange::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_character_kind" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7887-7891">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_character_kind" class="fn">visit_mut_character_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CharacterKind</code>.</p>
+<p>By default, this method calls [<code>CharacterKind::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_characters" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7896-7900">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_characters" class="fn">visit_mut_characters</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Character&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Character &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Character &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_class_string" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7905-7909">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string" class="fn">visit_mut_class_string</a>(
+    &amp;mut self,
+    node: &amp;mut ClassString,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>ClassString</code>.</p>
+<p>By default, this method calls [<code>ClassString::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_class_string_disjunction" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7914-7922">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string_disjunction" class="fn">visit_mut_class_string_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut ClassStringDisjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>ClassStringDisjunction</code>.</p>
+<p>By default, this method calls [<code>ClassStringDisjunction::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_class_strings" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7927-7935">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_class_strings" class="fn">visit_mut_class_strings</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;ClassString&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; ClassString &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; ClassString &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_disjunction" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7940-7944">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_disjunction" class="fn">visit_mut_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut Disjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Disjunction</code>.</p>
+<p>By default, this method calls [<code>Disjunction::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_dot" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7949-7951">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_dot" class="fn">visit_mut_dot</a>(&amp;mut self, node: &amp;mut Dot, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Dot</code>.</p>
+<p>By default, this method calls [<code>Dot::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_ignore_group" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7956-7960">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_ignore_group" class="fn">visit_mut_ignore_group</a>(
+    &amp;mut self,
+    node: &amp;mut IgnoreGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>IgnoreGroup</code>.</p>
+<p>By default, this method calls [<code>IgnoreGroup::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_indexed_reference" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7965-7973">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_indexed_reference" class="fn">visit_mut_indexed_reference</a>(
+    &amp;mut self,
+    node: &amp;mut IndexedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>IndexedReference</code>.</p>
+<p>By default, this method calls [<code>IndexedReference::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_look_around_assertion" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7978-7986">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion" class="fn">visit_mut_look_around_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>LookAroundAssertion</code>.</p>
+<p>By default, this method calls [<code>LookAroundAssertion::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_look_around_assertion_kind" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#7991-7999">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion_kind" class="fn">visit_mut_look_around_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>LookAroundAssertionKind</code>.</p>
+<p>By default, this method calls [<code>LookAroundAssertionKind::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_modifier" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8004-8008">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_modifier" class="fn">visit_mut_modifier</a>(
+    &amp;mut self,
+    node: &amp;mut Modifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Modifier</code>.</p>
+<p>By default, this method calls [<code>Modifier::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_modifiers" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8013-8017">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_modifiers" class="fn">visit_mut_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut Modifiers,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Modifiers</code>.</p>
+<p>By default, this method calls [<code>Modifiers::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_named_reference" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8022-8030">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_named_reference" class="fn">visit_mut_named_reference</a>(
+    &amp;mut self,
+    node: &amp;mut NamedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>NamedReference</code>.</p>
+<p>By default, this method calls [<code>NamedReference::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_opt_atom" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8035-8043">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_atom" class="fn">visit_mut_opt_atom</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Option &lt; swc_atoms :: Atom &gt;</code>.</p>
+<p>By default, this method calls [<code>Option &lt; swc_atoms :: Atom &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_opt_modifiers" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8048-8056">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_modifiers" class="fn">visit_mut_opt_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Modifiers&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Option &lt; Modifiers &gt;</code>.</p>
+<p>By default, this method calls [<code>Option &lt; Modifiers &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_pattern" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8061-8065">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_pattern" class="fn">visit_mut_pattern</a>(
+    &amp;mut self,
+    node: &amp;mut Pattern,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Pattern</code>.</p>
+<p>By default, this method calls [<code>Pattern::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_quantifier" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8070-8074">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_quantifier" class="fn">visit_mut_quantifier</a>(
+    &amp;mut self,
+    node: &amp;mut Quantifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Quantifier</code>.</p>
+<p>By default, this method calls [<code>Quantifier::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_span" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8079-8083">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_span" class="fn">visit_mut_span</a>(&amp;mut self, node: &amp;mut Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>swc_common :: Span</code>.</p>
+<p>By default, this method calls [<code>swc_common :: Span::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_term" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8088-8092">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_term" class="fn">visit_mut_term</a>(&amp;mut self, node: &amp;mut Term, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Term</code>.</p>
+<p>By default, this method calls [<code>Term::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_terms" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8097-8101">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_terms" class="fn">visit_mut_terms</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Term&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Term &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Term &gt;::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.visit_mut_unicode_property_escape" class="method"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8106-8114">Source</a><h4 class="code-header">fn <a href="#method.visit_mut_unicode_property_escape" class="fn">visit_mut_unicode_property_escape</a>(
+    &amp;mut self,
+    node: &amp;mut UnicodePropertyEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></summary><div class="docblock"><p>Visit a node of type <code>UnicodePropertyEscape</code>.</p>
+<p>By default, this method calls [<code>UnicodePropertyEscape::visit_mut_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details></div><h2 id="foreign-impls" class="section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor">§</a></h2><details class="toggle implementors-toggle"><summary><section id="impl-VisitMutAstPath-for-Either%3CA,+B%3E" class="impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8658-9174">Source</a><a href="#impl-VisitMutAstPath-for-Either%3CA,+B%3E" class="anchor">§</a><h3 class="code-header">impl&lt;A, B&gt; <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a> for <a class="enum" href="https://docs.rs/either/1/either/enum.Either.html" title="enum either::Either">Either</a>&lt;A, B&gt;<div class="where">where
+    A: <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a>,
+    B: <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_mut_alternative-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8664-8673">Source</a><a href="#method.visit_mut_alternative-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternative" class="fn">visit_mut_alternative</a>(
+    &amp;mut self,
+    node: &amp;mut Alternative,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_alternatives-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8676-8689">Source</a><a href="#method.visit_mut_alternatives-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternatives" class="fn">visit_mut_alternatives</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Alternative&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_atom-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8692-8701">Source</a><a href="#method.visit_mut_atom-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_atom" class="fn">visit_mut_atom</a>(&amp;mut self, node: &amp;mut Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_boundary_assertion-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8704-8717">Source</a><a href="#method.visit_mut_boundary_assertion-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion" class="fn">visit_mut_boundary_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_boundary_assertion_kind-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8720-8733">Source</a><a href="#method.visit_mut_boundary_assertion_kind-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion_kind" class="fn">visit_mut_boundary_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_capturing_group-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8736-8749">Source</a><a href="#method.visit_mut_capturing_group-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_capturing_group" class="fn">visit_mut_capturing_group</a>(
+    &amp;mut self,
+    node: &amp;mut CapturingGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8752-8761">Source</a><a href="#method.visit_mut_character-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character" class="fn">visit_mut_character</a>(
+    &amp;mut self,
+    node: &amp;mut Character,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8764-8777">Source</a><a href="#method.visit_mut_character_class-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class" class="fn">visit_mut_character_class</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClass,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8780-8793">Source</a><a href="#method.visit_mut_character_class_contents-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents" class="fn">visit_mut_character_class_contents</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContents,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents_kind-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8796-8809">Source</a><a href="#method.visit_mut_character_class_contents_kind-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents_kind" class="fn">visit_mut_character_class_contents_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContentsKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contentss-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8812-8825">Source</a><a href="#method.visit_mut_character_class_contentss-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contentss" class="fn">visit_mut_character_class_contentss</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;CharacterClassContents&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8828-8841">Source</a><a href="#method.visit_mut_character_class_escape-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape" class="fn">visit_mut_character_class_escape</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape_kind-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8844-8857">Source</a><a href="#method.visit_mut_character_class_escape_kind-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape_kind" class="fn">visit_mut_character_class_escape_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscapeKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_range-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8860-8873">Source</a><a href="#method.visit_mut_character_class_range-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_range" class="fn">visit_mut_character_class_range</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassRange,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_kind-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8876-8885">Source</a><a href="#method.visit_mut_character_kind-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_kind" class="fn">visit_mut_character_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_characters-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8888-8897">Source</a><a href="#method.visit_mut_characters-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_characters" class="fn">visit_mut_characters</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Character&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8900-8909">Source</a><a href="#method.visit_mut_class_string-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string" class="fn">visit_mut_class_string</a>(
+    &amp;mut self,
+    node: &amp;mut ClassString,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string_disjunction-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8912-8925">Source</a><a href="#method.visit_mut_class_string_disjunction-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string_disjunction" class="fn">visit_mut_class_string_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut ClassStringDisjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_strings-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8928-8941">Source</a><a href="#method.visit_mut_class_strings-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_strings" class="fn">visit_mut_class_strings</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;ClassString&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_disjunction-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8944-8953">Source</a><a href="#method.visit_mut_disjunction-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_disjunction" class="fn">visit_mut_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut Disjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_dot-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8956-8965">Source</a><a href="#method.visit_mut_dot-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_dot" class="fn">visit_mut_dot</a>(&amp;mut self, node: &amp;mut Dot, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_ignore_group-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8968-8977">Source</a><a href="#method.visit_mut_ignore_group-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_ignore_group" class="fn">visit_mut_ignore_group</a>(
+    &amp;mut self,
+    node: &amp;mut IgnoreGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_indexed_reference-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8980-8993">Source</a><a href="#method.visit_mut_indexed_reference-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_indexed_reference" class="fn">visit_mut_indexed_reference</a>(
+    &amp;mut self,
+    node: &amp;mut IndexedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8996-9009">Source</a><a href="#method.visit_mut_look_around_assertion-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion" class="fn">visit_mut_look_around_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion_kind-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9012-9025">Source</a><a href="#method.visit_mut_look_around_assertion_kind-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion_kind" class="fn">visit_mut_look_around_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifier-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9028-9037">Source</a><a href="#method.visit_mut_modifier-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifier" class="fn">visit_mut_modifier</a>(
+    &amp;mut self,
+    node: &amp;mut Modifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifiers-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9040-9049">Source</a><a href="#method.visit_mut_modifiers-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifiers" class="fn">visit_mut_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut Modifiers,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_named_reference-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9052-9065">Source</a><a href="#method.visit_mut_named_reference-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_named_reference" class="fn">visit_mut_named_reference</a>(
+    &amp;mut self,
+    node: &amp;mut NamedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_atom-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9068-9081">Source</a><a href="#method.visit_mut_opt_atom-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_atom" class="fn">visit_mut_opt_atom</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_modifiers-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9084-9097">Source</a><a href="#method.visit_mut_opt_modifiers-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_modifiers" class="fn">visit_mut_opt_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Modifiers&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_pattern-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9100-9109">Source</a><a href="#method.visit_mut_pattern-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_pattern" class="fn">visit_mut_pattern</a>(
+    &amp;mut self,
+    node: &amp;mut Pattern,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_quantifier-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9112-9121">Source</a><a href="#method.visit_mut_quantifier-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_quantifier" class="fn">visit_mut_quantifier</a>(
+    &amp;mut self,
+    node: &amp;mut Quantifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_span-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9124-9133">Source</a><a href="#method.visit_mut_span-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_span" class="fn">visit_mut_span</a>(&amp;mut self, node: &amp;mut Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_term-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9136-9145">Source</a><a href="#method.visit_mut_term-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_term" class="fn">visit_mut_term</a>(&amp;mut self, node: &amp;mut Term, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_terms-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9148-9157">Source</a><a href="#method.visit_mut_terms-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_terms" class="fn">visit_mut_terms</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Term&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_unicode_property_escape-1" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9160-9173">Source</a><a href="#method.visit_mut_unicode_property_escape-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_unicode_property_escape" class="fn">visit_mut_unicode_property_escape</a>(
+    &amp;mut self,
+    node: &amp;mut UnicodePropertyEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VisitMutAstPath-for-%26mut+V" class="impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8118-8385">Source</a><a href="#impl-VisitMutAstPath-for-%26mut+V" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut V</a><div class="where">where
+    V: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_mut_alternative-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8123-8125">Source</a><a href="#method.visit_mut_alternative-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternative" class="fn">visit_mut_alternative</a>(
+    &amp;mut self,
+    node: &amp;mut Alternative,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_alternatives-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8128-8134">Source</a><a href="#method.visit_mut_alternatives-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternatives" class="fn">visit_mut_alternatives</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Alternative&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_atom-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8137-8139">Source</a><a href="#method.visit_mut_atom-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_atom" class="fn">visit_mut_atom</a>(&amp;mut self, node: &amp;mut Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_boundary_assertion-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8142-8148">Source</a><a href="#method.visit_mut_boundary_assertion-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion" class="fn">visit_mut_boundary_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_boundary_assertion_kind-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8151-8157">Source</a><a href="#method.visit_mut_boundary_assertion_kind-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion_kind" class="fn">visit_mut_boundary_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_capturing_group-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8160-8166">Source</a><a href="#method.visit_mut_capturing_group-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_capturing_group" class="fn">visit_mut_capturing_group</a>(
+    &amp;mut self,
+    node: &amp;mut CapturingGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8169-8171">Source</a><a href="#method.visit_mut_character-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character" class="fn">visit_mut_character</a>(
+    &amp;mut self,
+    node: &amp;mut Character,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8174-8180">Source</a><a href="#method.visit_mut_character_class-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class" class="fn">visit_mut_character_class</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClass,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8183-8189">Source</a><a href="#method.visit_mut_character_class_contents-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents" class="fn">visit_mut_character_class_contents</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContents,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents_kind-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8192-8202">Source</a><a href="#method.visit_mut_character_class_contents_kind-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents_kind" class="fn">visit_mut_character_class_contents_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContentsKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contentss-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8205-8211">Source</a><a href="#method.visit_mut_character_class_contentss-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contentss" class="fn">visit_mut_character_class_contentss</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;CharacterClassContents&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8214-8220">Source</a><a href="#method.visit_mut_character_class_escape-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape" class="fn">visit_mut_character_class_escape</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape_kind-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8223-8229">Source</a><a href="#method.visit_mut_character_class_escape_kind-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape_kind" class="fn">visit_mut_character_class_escape_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscapeKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_range-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8232-8238">Source</a><a href="#method.visit_mut_character_class_range-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_range" class="fn">visit_mut_character_class_range</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassRange,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_kind-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8241-8243">Source</a><a href="#method.visit_mut_character_kind-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_kind" class="fn">visit_mut_character_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_characters-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8246-8248">Source</a><a href="#method.visit_mut_characters-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_characters" class="fn">visit_mut_characters</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Character&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8251-8253">Source</a><a href="#method.visit_mut_class_string-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string" class="fn">visit_mut_class_string</a>(
+    &amp;mut self,
+    node: &amp;mut ClassString,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string_disjunction-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8256-8262">Source</a><a href="#method.visit_mut_class_string_disjunction-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string_disjunction" class="fn">visit_mut_class_string_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut ClassStringDisjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_strings-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8265-8271">Source</a><a href="#method.visit_mut_class_strings-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_strings" class="fn">visit_mut_class_strings</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;ClassString&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_disjunction-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8274-8276">Source</a><a href="#method.visit_mut_disjunction-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_disjunction" class="fn">visit_mut_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut Disjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_dot-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8279-8281">Source</a><a href="#method.visit_mut_dot-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_dot" class="fn">visit_mut_dot</a>(&amp;mut self, node: &amp;mut Dot, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_ignore_group-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8284-8286">Source</a><a href="#method.visit_mut_ignore_group-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_ignore_group" class="fn">visit_mut_ignore_group</a>(
+    &amp;mut self,
+    node: &amp;mut IgnoreGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_indexed_reference-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8289-8295">Source</a><a href="#method.visit_mut_indexed_reference-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_indexed_reference" class="fn">visit_mut_indexed_reference</a>(
+    &amp;mut self,
+    node: &amp;mut IndexedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8298-8304">Source</a><a href="#method.visit_mut_look_around_assertion-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion" class="fn">visit_mut_look_around_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion_kind-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8307-8313">Source</a><a href="#method.visit_mut_look_around_assertion_kind-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion_kind" class="fn">visit_mut_look_around_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifier-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8316-8318">Source</a><a href="#method.visit_mut_modifier-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifier" class="fn">visit_mut_modifier</a>(
+    &amp;mut self,
+    node: &amp;mut Modifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifiers-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8321-8323">Source</a><a href="#method.visit_mut_modifiers-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifiers" class="fn">visit_mut_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut Modifiers,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_named_reference-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8326-8332">Source</a><a href="#method.visit_mut_named_reference-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_named_reference" class="fn">visit_mut_named_reference</a>(
+    &amp;mut self,
+    node: &amp;mut NamedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_atom-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8335-8341">Source</a><a href="#method.visit_mut_opt_atom-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_atom" class="fn">visit_mut_opt_atom</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_modifiers-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8344-8350">Source</a><a href="#method.visit_mut_opt_modifiers-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_modifiers" class="fn">visit_mut_opt_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Modifiers&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_pattern-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8353-8355">Source</a><a href="#method.visit_mut_pattern-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_pattern" class="fn">visit_mut_pattern</a>(
+    &amp;mut self,
+    node: &amp;mut Pattern,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_quantifier-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8358-8360">Source</a><a href="#method.visit_mut_quantifier-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_quantifier" class="fn">visit_mut_quantifier</a>(
+    &amp;mut self,
+    node: &amp;mut Quantifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_span-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8363-8365">Source</a><a href="#method.visit_mut_span-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_span" class="fn">visit_mut_span</a>(&amp;mut self, node: &amp;mut Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_term-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8368-8370">Source</a><a href="#method.visit_mut_term-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_term" class="fn">visit_mut_term</a>(&amp;mut self, node: &amp;mut Term, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_terms-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8373-8375">Source</a><a href="#method.visit_mut_terms-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_terms" class="fn">visit_mut_terms</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Term&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_unicode_property_escape-2" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8378-8384">Source</a><a href="#method.visit_mut_unicode_property_escape-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_unicode_property_escape" class="fn">visit_mut_unicode_property_escape</a>(
+    &amp;mut self,
+    node: &amp;mut UnicodePropertyEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VisitMutAstPath-for-Box%3CV%3E" class="impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8388-8655">Source</a><a href="#impl-VisitMutAstPath-for-Box%3CV%3E" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;V&gt;<div class="where">where
+    V: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_mut_alternative-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8393-8395">Source</a><a href="#method.visit_mut_alternative-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternative" class="fn">visit_mut_alternative</a>(
+    &amp;mut self,
+    node: &amp;mut Alternative,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_alternatives-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8398-8404">Source</a><a href="#method.visit_mut_alternatives-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternatives" class="fn">visit_mut_alternatives</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Alternative&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_atom-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8407-8409">Source</a><a href="#method.visit_mut_atom-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_atom" class="fn">visit_mut_atom</a>(&amp;mut self, node: &amp;mut Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_boundary_assertion-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8412-8418">Source</a><a href="#method.visit_mut_boundary_assertion-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion" class="fn">visit_mut_boundary_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_boundary_assertion_kind-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8421-8427">Source</a><a href="#method.visit_mut_boundary_assertion_kind-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion_kind" class="fn">visit_mut_boundary_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_capturing_group-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8430-8436">Source</a><a href="#method.visit_mut_capturing_group-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_capturing_group" class="fn">visit_mut_capturing_group</a>(
+    &amp;mut self,
+    node: &amp;mut CapturingGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8439-8441">Source</a><a href="#method.visit_mut_character-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character" class="fn">visit_mut_character</a>(
+    &amp;mut self,
+    node: &amp;mut Character,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8444-8450">Source</a><a href="#method.visit_mut_character_class-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class" class="fn">visit_mut_character_class</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClass,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8453-8459">Source</a><a href="#method.visit_mut_character_class_contents-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents" class="fn">visit_mut_character_class_contents</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContents,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents_kind-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8462-8472">Source</a><a href="#method.visit_mut_character_class_contents_kind-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents_kind" class="fn">visit_mut_character_class_contents_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContentsKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contentss-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8475-8481">Source</a><a href="#method.visit_mut_character_class_contentss-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contentss" class="fn">visit_mut_character_class_contentss</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;CharacterClassContents&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8484-8490">Source</a><a href="#method.visit_mut_character_class_escape-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape" class="fn">visit_mut_character_class_escape</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape_kind-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8493-8499">Source</a><a href="#method.visit_mut_character_class_escape_kind-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape_kind" class="fn">visit_mut_character_class_escape_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscapeKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_range-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8502-8508">Source</a><a href="#method.visit_mut_character_class_range-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_range" class="fn">visit_mut_character_class_range</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassRange,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_kind-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8511-8513">Source</a><a href="#method.visit_mut_character_kind-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_kind" class="fn">visit_mut_character_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_characters-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8516-8518">Source</a><a href="#method.visit_mut_characters-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_characters" class="fn">visit_mut_characters</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Character&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8521-8523">Source</a><a href="#method.visit_mut_class_string-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string" class="fn">visit_mut_class_string</a>(
+    &amp;mut self,
+    node: &amp;mut ClassString,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string_disjunction-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8526-8532">Source</a><a href="#method.visit_mut_class_string_disjunction-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string_disjunction" class="fn">visit_mut_class_string_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut ClassStringDisjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_strings-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8535-8541">Source</a><a href="#method.visit_mut_class_strings-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_strings" class="fn">visit_mut_class_strings</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;ClassString&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_disjunction-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8544-8546">Source</a><a href="#method.visit_mut_disjunction-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_disjunction" class="fn">visit_mut_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut Disjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_dot-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8549-8551">Source</a><a href="#method.visit_mut_dot-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_dot" class="fn">visit_mut_dot</a>(&amp;mut self, node: &amp;mut Dot, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_ignore_group-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8554-8556">Source</a><a href="#method.visit_mut_ignore_group-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_ignore_group" class="fn">visit_mut_ignore_group</a>(
+    &amp;mut self,
+    node: &amp;mut IgnoreGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_indexed_reference-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8559-8565">Source</a><a href="#method.visit_mut_indexed_reference-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_indexed_reference" class="fn">visit_mut_indexed_reference</a>(
+    &amp;mut self,
+    node: &amp;mut IndexedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8568-8574">Source</a><a href="#method.visit_mut_look_around_assertion-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion" class="fn">visit_mut_look_around_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion_kind-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8577-8583">Source</a><a href="#method.visit_mut_look_around_assertion_kind-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion_kind" class="fn">visit_mut_look_around_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifier-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8586-8588">Source</a><a href="#method.visit_mut_modifier-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifier" class="fn">visit_mut_modifier</a>(
+    &amp;mut self,
+    node: &amp;mut Modifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifiers-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8591-8593">Source</a><a href="#method.visit_mut_modifiers-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifiers" class="fn">visit_mut_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut Modifiers,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_named_reference-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8596-8602">Source</a><a href="#method.visit_mut_named_reference-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_named_reference" class="fn">visit_mut_named_reference</a>(
+    &amp;mut self,
+    node: &amp;mut NamedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_atom-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8605-8611">Source</a><a href="#method.visit_mut_opt_atom-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_atom" class="fn">visit_mut_opt_atom</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_modifiers-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8614-8620">Source</a><a href="#method.visit_mut_opt_modifiers-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_modifiers" class="fn">visit_mut_opt_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Modifiers&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_pattern-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8623-8625">Source</a><a href="#method.visit_mut_pattern-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_pattern" class="fn">visit_mut_pattern</a>(
+    &amp;mut self,
+    node: &amp;mut Pattern,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_quantifier-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8628-8630">Source</a><a href="#method.visit_mut_quantifier-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_quantifier" class="fn">visit_mut_quantifier</a>(
+    &amp;mut self,
+    node: &amp;mut Quantifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_span-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8633-8635">Source</a><a href="#method.visit_mut_span-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_span" class="fn">visit_mut_span</a>(&amp;mut self, node: &amp;mut Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_term-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8638-8640">Source</a><a href="#method.visit_mut_term-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_term" class="fn">visit_mut_term</a>(&amp;mut self, node: &amp;mut Term, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_terms-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8643-8645">Source</a><a href="#method.visit_mut_terms-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_terms" class="fn">visit_mut_terms</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Term&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_unicode_property_escape-3" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#8648-8654">Source</a><a href="#method.visit_mut_unicode_property_escape-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_unicode_property_escape" class="fn">visit_mut_unicode_property_escape</a>(
+    &amp;mut self,
+    node: &amp;mut UnicodePropertyEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-VisitMutAstPath-for-Optional%3CV%3E" class="impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9177-9596">Source</a><a href="#impl-VisitMutAstPath-for-Optional%3CV%3E" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a> for Optional&lt;V&gt;<div class="where">where
+    V: <a class="trait" href="trait.VisitMutAstPath.html" title="trait swc_ecma_regexp_visit::VisitMutAstPath">VisitMutAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.visit_mut_alternative-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9182-9187">Source</a><a href="#method.visit_mut_alternative-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternative" class="fn">visit_mut_alternative</a>(
+    &amp;mut self,
+    node: &amp;mut Alternative,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_alternatives-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9190-9199">Source</a><a href="#method.visit_mut_alternatives-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_alternatives" class="fn">visit_mut_alternatives</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Alternative&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_atom-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9202-9207">Source</a><a href="#method.visit_mut_atom-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_atom" class="fn">visit_mut_atom</a>(&amp;mut self, node: &amp;mut Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_boundary_assertion-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9210-9223">Source</a><a href="#method.visit_mut_boundary_assertion-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion" class="fn">visit_mut_boundary_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_boundary_assertion_kind-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9226-9239">Source</a><a href="#method.visit_mut_boundary_assertion_kind-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_boundary_assertion_kind" class="fn">visit_mut_boundary_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut BoundaryAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_capturing_group-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9242-9251">Source</a><a href="#method.visit_mut_capturing_group-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_capturing_group" class="fn">visit_mut_capturing_group</a>(
+    &amp;mut self,
+    node: &amp;mut CapturingGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9254-9259">Source</a><a href="#method.visit_mut_character-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character" class="fn">visit_mut_character</a>(
+    &amp;mut self,
+    node: &amp;mut Character,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9262-9271">Source</a><a href="#method.visit_mut_character_class-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class" class="fn">visit_mut_character_class</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClass,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9274-9287">Source</a><a href="#method.visit_mut_character_class_contents-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents" class="fn">visit_mut_character_class_contents</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContents,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contents_kind-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9290-9303">Source</a><a href="#method.visit_mut_character_class_contents_kind-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contents_kind" class="fn">visit_mut_character_class_contents_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassContentsKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_contentss-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9306-9319">Source</a><a href="#method.visit_mut_character_class_contentss-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_contentss" class="fn">visit_mut_character_class_contentss</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;CharacterClassContents&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9322-9335">Source</a><a href="#method.visit_mut_character_class_escape-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape" class="fn">visit_mut_character_class_escape</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_escape_kind-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9338-9351">Source</a><a href="#method.visit_mut_character_class_escape_kind-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_escape_kind" class="fn">visit_mut_character_class_escape_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassEscapeKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_class_range-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9354-9367">Source</a><a href="#method.visit_mut_character_class_range-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_class_range" class="fn">visit_mut_character_class_range</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterClassRange,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_character_kind-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9370-9375">Source</a><a href="#method.visit_mut_character_kind-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_character_kind" class="fn">visit_mut_character_kind</a>(
+    &amp;mut self,
+    node: &amp;mut CharacterKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_characters-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9378-9383">Source</a><a href="#method.visit_mut_characters-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_characters" class="fn">visit_mut_characters</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Character&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9386-9391">Source</a><a href="#method.visit_mut_class_string-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string" class="fn">visit_mut_class_string</a>(
+    &amp;mut self,
+    node: &amp;mut ClassString,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_string_disjunction-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9394-9407">Source</a><a href="#method.visit_mut_class_string_disjunction-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_string_disjunction" class="fn">visit_mut_class_string_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut ClassStringDisjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_class_strings-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9410-9419">Source</a><a href="#method.visit_mut_class_strings-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_class_strings" class="fn">visit_mut_class_strings</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;ClassString&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_disjunction-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9422-9427">Source</a><a href="#method.visit_mut_disjunction-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_disjunction" class="fn">visit_mut_disjunction</a>(
+    &amp;mut self,
+    node: &amp;mut Disjunction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_dot-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9430-9435">Source</a><a href="#method.visit_mut_dot-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_dot" class="fn">visit_mut_dot</a>(&amp;mut self, node: &amp;mut Dot, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_ignore_group-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9438-9443">Source</a><a href="#method.visit_mut_ignore_group-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_ignore_group" class="fn">visit_mut_ignore_group</a>(
+    &amp;mut self,
+    node: &amp;mut IgnoreGroup,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_indexed_reference-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9446-9455">Source</a><a href="#method.visit_mut_indexed_reference-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_indexed_reference" class="fn">visit_mut_indexed_reference</a>(
+    &amp;mut self,
+    node: &amp;mut IndexedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9458-9471">Source</a><a href="#method.visit_mut_look_around_assertion-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion" class="fn">visit_mut_look_around_assertion</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertion,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_look_around_assertion_kind-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9474-9487">Source</a><a href="#method.visit_mut_look_around_assertion_kind-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_look_around_assertion_kind" class="fn">visit_mut_look_around_assertion_kind</a>(
+    &amp;mut self,
+    node: &amp;mut LookAroundAssertionKind,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifier-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9490-9495">Source</a><a href="#method.visit_mut_modifier-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifier" class="fn">visit_mut_modifier</a>(
+    &amp;mut self,
+    node: &amp;mut Modifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_modifiers-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9498-9503">Source</a><a href="#method.visit_mut_modifiers-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_modifiers" class="fn">visit_mut_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut Modifiers,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_named_reference-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9506-9515">Source</a><a href="#method.visit_mut_named_reference-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_named_reference" class="fn">visit_mut_named_reference</a>(
+    &amp;mut self,
+    node: &amp;mut NamedReference,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_atom-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9518-9527">Source</a><a href="#method.visit_mut_opt_atom-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_atom" class="fn">visit_mut_opt_atom</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_opt_modifiers-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9530-9539">Source</a><a href="#method.visit_mut_opt_modifiers-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_opt_modifiers" class="fn">visit_mut_opt_modifiers</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Modifiers&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_pattern-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9542-9547">Source</a><a href="#method.visit_mut_pattern-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_pattern" class="fn">visit_mut_pattern</a>(
+    &amp;mut self,
+    node: &amp;mut Pattern,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_quantifier-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9550-9555">Source</a><a href="#method.visit_mut_quantifier-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_quantifier" class="fn">visit_mut_quantifier</a>(
+    &amp;mut self,
+    node: &amp;mut Quantifier,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_span-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9558-9563">Source</a><a href="#method.visit_mut_span-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_span" class="fn">visit_mut_span</a>(&amp;mut self, node: &amp;mut Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_term-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9566-9571">Source</a><a href="#method.visit_mut_term-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_term" class="fn">visit_mut_term</a>(&amp;mut self, node: &amp;mut Term, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>)</h4></section><section id="method.visit_mut_terms-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9574-9579">Source</a><a href="#method.visit_mut_terms-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_terms" class="fn">visit_mut_terms</a>(
+    &amp;mut self,
+    node: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Term&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section><section id="method.visit_mut_unicode_property_escape-4" class="method trait-impl"><a class="src rightside" href="../src/swc_ecma_regexp_visit/generated.rs.html#9582-9595">Source</a><a href="#method.visit_mut_unicode_property_escape-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.visit_mut_unicode_property_escape" class="fn">visit_mut_unicode_property_escape</a>(
+    &amp;mut self,
+    node: &amp;mut UnicodePropertyEscape,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_ecma_regexp_visit::AstKindPath">AstKindPath</a>,
+)</h4></section></div></details><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"></div><script src="../trait.impl/swc_ecma_regexp_visit/generated/trait.VisitMutAstPath.js" data-ignore-extern-crates="alloc,either,swc_visit" async></script></section></div></main></body></html>

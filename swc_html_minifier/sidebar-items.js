@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CssMinificationMode"],"fn":["minify_document","minify_document_fragment","minify_document_fragment_with_custom_css_minifier","minify_document_with_custom_css_minifier"],"mod":["option"],"static":["CONDITIONAL_COMMENT_END","CONDITIONAL_COMMENT_START"],"trait":["MinifyCss"]};

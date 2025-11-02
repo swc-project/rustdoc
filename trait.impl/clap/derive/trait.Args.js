@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["dbg_swc",[["impl Args for <a class=\"struct\" href=\"dbg_swc/es/exec_test/struct.TestMinifiedBundleCommand.html\" title=\"struct dbg_swc::es::exec_test::TestMinifiedBundleCommand\">TestMinifiedBundleCommand</a>"],["impl Args for <a class=\"struct\" href=\"dbg_swc/es/minifier/compare/struct.CompareCommand.html\" title=\"struct dbg_swc::es::minifier::compare::CompareCommand\">CompareCommand</a>"],["impl Args for <a class=\"struct\" href=\"dbg_swc/es/minifier/compare_opts/struct.CompareOptsCommand.html\" title=\"struct dbg_swc::es::minifier::compare_opts::CompareOptsCommand\">CompareOptsCommand</a>"],["impl Args for <a class=\"struct\" href=\"dbg_swc/es/minifier/ensure_size/struct.EnsureSize.html\" title=\"struct dbg_swc::es::minifier::ensure_size::EnsureSize\">EnsureSize</a>"],["impl Args for <a class=\"struct\" href=\"dbg_swc/es/minifier/next/check_size/struct.CheckSizeCommand.html\" title=\"struct dbg_swc::es::minifier::next::check_size::CheckSizeCommand\">CheckSizeCommand</a>"],["impl Args for <a class=\"struct\" href=\"dbg_swc/es/minifier/reduce/struct.ReduceCommand.html\" title=\"struct dbg_swc::es::minifier::reduce::ReduceCommand\">ReduceCommand</a>"],["impl Args for <a class=\"struct\" href=\"dbg_swc/struct.AppArgs.html\" title=\"struct dbg_swc::AppArgs\">AppArgs</a>"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[1298]}

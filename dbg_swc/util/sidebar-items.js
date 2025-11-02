@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["all_js_files","gzipped_size","make_pretty","parse_js","print_js","wrap_task"],"mod":["minifier"],"struct":["ChildGuard","ModuleRecord"]};

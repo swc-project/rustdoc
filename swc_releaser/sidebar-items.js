@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Cmd"],"fn":["get_data","get_swc_core_version","git_commit","git_tag_core","main","run_bump","run_cargo_set_version","update_changelog"],"struct":["Bump","CliArgs","InternedGraph"],"type":["VersionMap"]};

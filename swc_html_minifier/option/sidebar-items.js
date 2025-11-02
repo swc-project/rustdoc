@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CollapseWhitespaces","MinifierType","MinifyCssOption","MinifyJsOption","MinifyJsonOption","RemoveRedundantAttributes"],"struct":["CssOptions","JsOptions","JsParserOptions","JsonOptions","MinifyOptions"]};

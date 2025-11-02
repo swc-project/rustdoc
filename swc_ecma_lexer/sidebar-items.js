@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["Syntax"],"fn":["lexer"],"macro":["byte_search","safe_byte_match_table","tok"],"mod":["common","error","input","lexer","token"],"struct":["EsSyntax","Parser","StringInput","SyntaxFlags","TsSyntax"]};

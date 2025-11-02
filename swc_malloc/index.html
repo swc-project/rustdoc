@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This crate configures memory allocator."><title>swc_malloc - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-20739d33.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="swc_malloc" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0-nightly (2e6882ac5 2025-05-05)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../swc_malloc/index.html">swc_<wbr>malloc</a><span class="version">1.2.4</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#memory-allocator-selection-strategy" title="Memory Allocator Selection Strategy">Memory Allocator Selection Strategy</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Crate <span>swc_malloc</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/swc_malloc/lib.rs.html#1-57">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This crate configures memory allocator.</p>
+<p>The swc crates related to the node binding should depend on this crate.</p>
+<h2 id="memory-allocator-selection-strategy"><a class="doc-anchor" href="#memory-allocator-selection-strategy">§</a>Memory Allocator Selection Strategy</h2>
+<p>This crate configures the global memory allocator based on the target
+platform:</p>
+<ul>
+<li>
+<p><strong>mimalloc</strong>: Used for most platforms (Windows, macOS, Linux x86_64 with
+glibc, Linux aarch64 with glibc). Provides excellent performance and
+memory efficiency.</p>
+</li>
+<li>
+<p><strong>jemalloc</strong>: Used for Linux ARM 32-bit (armv7) with glibc. This is
+because mimalloc has known issues on this architecture.</p>
+</li>
+<li>
+<p><strong>System allocator (default)</strong>: Used for musl libc targets (Alpine Linux
+and other musl-based distributions). This is intentional and correct
+because:</p>
+<ul>
+<li>mimalloc has known segfault issues on ARM64 musl targets (see https://github.com/microsoft/mimalloc/issues/556)</li>
+<li>jemalloc has threading issues with musl libc (see https://github.com/jemalloc/jemalloc/issues/1443)</li>
+<li>musl’s built-in allocator is designed to work reliably across all
+architectures</li>
+</ul>
+</li>
+<li>
+<p><strong>WASM</strong>: Uses the default allocator for WebAssembly targets.</p>
+</li>
+</ul>
+<p>If you encounter segmentation faults on ARM64 or Alpine Linux during
+installation, the issue is likely not related to allocator configuration,
+but rather to binary loading or compatibility issues. See the postinstall.js
+script for troubleshooting options.</p>
+</div></details></section></div></main></body></html>

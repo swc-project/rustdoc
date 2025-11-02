@@ -1,0 +1,456 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A visitor trait for traversing the AST."><title>FoldAstPath in swc_xml_visit - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-20739d33.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="swc_xml_visit" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0-nightly (2e6882ac5 2025-05-05)" data-channel="nightly" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../swc_xml_visit/index.html">swc_<wbr>xml_<wbr>visit</a><span class="version">16.0.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Fold<wbr>AstPath</a></h2><h3><a href="#provided-methods">Provided Methods</a></h3><ul class="block"><li><a href="#method.fold_atom" title="fold_atom">fold_atom</a></li><li><a href="#method.fold_attribute" title="fold_attribute">fold_attribute</a></li><li><a href="#method.fold_attribute_token" title="fold_attribute_token">fold_attribute_token</a></li><li><a href="#method.fold_attribute_tokens" title="fold_attribute_tokens">fold_attribute_tokens</a></li><li><a href="#method.fold_attributes" title="fold_attributes">fold_attributes</a></li><li><a href="#method.fold_cdata_section" title="fold_cdata_section">fold_cdata_section</a></li><li><a href="#method.fold_child" title="fold_child">fold_child</a></li><li><a href="#method.fold_childs" title="fold_childs">fold_childs</a></li><li><a href="#method.fold_comment" title="fold_comment">fold_comment</a></li><li><a href="#method.fold_document" title="fold_document">fold_document</a></li><li><a href="#method.fold_document_mode" title="fold_document_mode">fold_document_mode</a></li><li><a href="#method.fold_document_type" title="fold_document_type">fold_document_type</a></li><li><a href="#method.fold_element" title="fold_element">fold_element</a></li><li><a href="#method.fold_namespace" title="fold_namespace">fold_namespace</a></li><li><a href="#method.fold_opt_atom" title="fold_opt_atom">fold_opt_atom</a></li><li><a href="#method.fold_opt_namespace" title="fold_opt_namespace">fold_opt_namespace</a></li><li><a href="#method.fold_processing_instruction" title="fold_processing_instruction">fold_processing_instruction</a></li><li><a href="#method.fold_span" title="fold_span">fold_span</a></li><li><a href="#method.fold_text" title="fold_text">fold_text</a></li><li><a href="#method.fold_token" title="fold_token">fold_token</a></li><li><a href="#method.fold_token_and_span" title="fold_token_and_span">fold_token_and_span</a></li></ul><h3><a href="#foreign-impls">Implementations on Foreign Types</a></h3><ul class="block"><li><a href="#impl-FoldAstPath-for-%26mut+V" title="&#38;mut V">&#38;mut V</a></li><li><a href="#impl-FoldAstPath-for-Box%3CV%3E" title="Box&#60;V&#62;">Box&#60;V&#62;</a></li><li><a href="#impl-FoldAstPath-for-Either%3CA,+B%3E" title="Either&#60;A, B&#62;">Either&#60;A, B&#62;</a></li><li><a href="#impl-FoldAstPath-for-Optional%3CV%3E" title="Optional&#60;V&#62;">Optional&#60;V&#62;</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="index.html">In crate swc_<wbr>xml_<wbr>visit</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="index.html">swc_xml_visit</a></div><h1>Trait <span class="trait">FoldAstPath</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/swc_xml_visit/generated.rs.html#8240-8452">Source</a> </span></div><pre class="rust item-decl"><code>pub trait FoldAstPath {
+<details class="toggle type-contents-toggle"><summary class="hideme"><span>Show 21 methods</span></summary>    // Provided methods
+    fn <a href="#method.fold_atom" class="fn">fold_atom</a>(&amp;mut self, node: Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Atom { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_attribute" class="fn">fold_attribute</a>(
+        &amp;mut self,
+        node: Attribute,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; Attribute { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_attribute_token" class="fn">fold_attribute_token</a>(
+        &amp;mut self,
+        node: AttributeToken,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; AttributeToken { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_attribute_tokens" class="fn">fold_attribute_tokens</a>(
+        &amp;mut self,
+        node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_attributes" class="fn">fold_attributes</a>(
+        &amp;mut self,
+        node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_cdata_section" class="fn">fold_cdata_section</a>(
+        &amp;mut self,
+        node: CdataSection,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; CdataSection { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_child" class="fn">fold_child</a>(&amp;mut self, node: Child, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Child { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_childs" class="fn">fold_childs</a>(
+        &amp;mut self,
+        node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_comment" class="fn">fold_comment</a>(
+        &amp;mut self,
+        node: Comment,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; Comment { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_document" class="fn">fold_document</a>(
+        &amp;mut self,
+        node: Document,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; Document { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_document_mode" class="fn">fold_document_mode</a>(
+        &amp;mut self,
+        node: DocumentMode,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; DocumentMode { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_document_type" class="fn">fold_document_type</a>(
+        &amp;mut self,
+        node: DocumentType,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; DocumentType { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_element" class="fn">fold_element</a>(
+        &amp;mut self,
+        node: Element,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; Element { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_namespace" class="fn">fold_namespace</a>(
+        &amp;mut self,
+        node: Namespace,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; Namespace { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_opt_atom" class="fn">fold_opt_atom</a>(
+        &amp;mut self,
+        node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_opt_namespace" class="fn">fold_opt_namespace</a>(
+        &amp;mut self,
+        node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt; { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_processing_instruction" class="fn">fold_processing_instruction</a>(
+        &amp;mut self,
+        node: ProcessingInstruction,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; ProcessingInstruction { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_span" class="fn">fold_span</a>(&amp;mut self, node: Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Span { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_text" class="fn">fold_text</a>(&amp;mut self, node: Text, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Text { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_token" class="fn">fold_token</a>(&amp;mut self, node: Token, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Token { ... }
+<span class="item-spacer"></span>    fn <a href="#method.fold_token_and_span" class="fn">fold_token_and_span</a>(
+        &amp;mut self,
+        node: TokenAndSpan,
+        __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+    ) -&gt; TokenAndSpan { ... }
+</details>}</code></pre><span class="item-info"><div class="stab portability">Available on <strong>crate feature <code>path</code></strong> only.</div></span><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>A visitor trait for traversing the AST.</p>
+</div></details><h2 id="provided-methods" class="section-header">Provided Methods<a href="#provided-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="method.fold_atom" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8245-8253">Source</a><h4 class="code-header">fn <a href="#method.fold_atom" class="fn">fold_atom</a>(&amp;mut self, node: Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Atom</h4></section></summary><div class="docblock"><p>Visit a node of type <code>swc_atoms :: Atom</code>.</p>
+<p>By default, this method calls [<code>swc_atoms :: Atom::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_attribute" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8258-8260">Source</a><h4 class="code-header">fn <a href="#method.fold_attribute" class="fn">fold_attribute</a>(
+    &amp;mut self,
+    node: Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Attribute</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Attribute</code>.</p>
+<p>By default, this method calls [<code>Attribute::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_attribute_token" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8265-8273">Source</a><h4 class="code-header">fn <a href="#method.fold_attribute_token" class="fn">fold_attribute_token</a>(
+    &amp;mut self,
+    node: AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; AttributeToken</h4></section></summary><div class="docblock"><p>Visit a node of type <code>AttributeToken</code>.</p>
+<p>By default, this method calls [<code>AttributeToken::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_attribute_tokens" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8278-8286">Source</a><h4 class="code-header">fn <a href="#method.fold_attribute_tokens" class="fn">fold_attribute_tokens</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; AttributeToken &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; AttributeToken &gt;::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_attributes" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8291-8299">Source</a><h4 class="code-header">fn <a href="#method.fold_attributes" class="fn">fold_attributes</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Attribute &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Attribute &gt;::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_cdata_section" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8304-8310">Source</a><h4 class="code-header">fn <a href="#method.fold_cdata_section" class="fn">fold_cdata_section</a>(
+    &amp;mut self,
+    node: CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; CdataSection</h4></section></summary><div class="docblock"><p>Visit a node of type <code>CdataSection</code>.</p>
+<p>By default, this method calls [<code>CdataSection::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_child" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8315-8317">Source</a><h4 class="code-header">fn <a href="#method.fold_child" class="fn">fold_child</a>(&amp;mut self, node: Child, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Child</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Child</code>.</p>
+<p>By default, this method calls [<code>Child::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_childs" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8322-8324">Source</a><h4 class="code-header">fn <a href="#method.fold_childs" class="fn">fold_childs</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Vec &lt; Child &gt;</code>.</p>
+<p>By default, this method calls [<code>Vec &lt; Child &gt;::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_comment" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8329-8331">Source</a><h4 class="code-header">fn <a href="#method.fold_comment" class="fn">fold_comment</a>(
+    &amp;mut self,
+    node: Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Comment</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Comment</code>.</p>
+<p>By default, this method calls [<code>Comment::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_document" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8336-8338">Source</a><h4 class="code-header">fn <a href="#method.fold_document" class="fn">fold_document</a>(
+    &amp;mut self,
+    node: Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Document</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Document</code>.</p>
+<p>By default, this method calls [<code>Document::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_document_mode" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8343-8349">Source</a><h4 class="code-header">fn <a href="#method.fold_document_mode" class="fn">fold_document_mode</a>(
+    &amp;mut self,
+    node: DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentMode</h4></section></summary><div class="docblock"><p>Visit a node of type <code>DocumentMode</code>.</p>
+<p>By default, this method calls [<code>DocumentMode::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_document_type" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8354-8360">Source</a><h4 class="code-header">fn <a href="#method.fold_document_type" class="fn">fold_document_type</a>(
+    &amp;mut self,
+    node: DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentType</h4></section></summary><div class="docblock"><p>Visit a node of type <code>DocumentType</code>.</p>
+<p>By default, this method calls [<code>DocumentType::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_element" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8365-8367">Source</a><h4 class="code-header">fn <a href="#method.fold_element" class="fn">fold_element</a>(
+    &amp;mut self,
+    node: Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Element</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Element</code>.</p>
+<p>By default, this method calls [<code>Element::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_namespace" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8372-8374">Source</a><h4 class="code-header">fn <a href="#method.fold_namespace" class="fn">fold_namespace</a>(
+    &amp;mut self,
+    node: Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Namespace</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Namespace</code>.</p>
+<p>By default, this method calls [<code>Namespace::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_opt_atom" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8379-8387">Source</a><h4 class="code-header">fn <a href="#method.fold_opt_atom" class="fn">fold_opt_atom</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Option &lt; swc_atoms :: Atom &gt;</code>.</p>
+<p>By default, this method calls [<code>Option &lt; swc_atoms :: Atom &gt;::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_opt_namespace" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8392-8400">Source</a><h4 class="code-header">fn <a href="#method.fold_opt_namespace" class="fn">fold_opt_namespace</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Option &lt; Namespace &gt;</code>.</p>
+<p>By default, this method calls [<code>Option &lt; Namespace &gt;::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_processing_instruction" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8405-8413">Source</a><h4 class="code-header">fn <a href="#method.fold_processing_instruction" class="fn">fold_processing_instruction</a>(
+    &amp;mut self,
+    node: ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; ProcessingInstruction</h4></section></summary><div class="docblock"><p>Visit a node of type <code>ProcessingInstruction</code>.</p>
+<p>By default, this method calls [<code>ProcessingInstruction::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_span" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8418-8426">Source</a><h4 class="code-header">fn <a href="#method.fold_span" class="fn">fold_span</a>(&amp;mut self, node: Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Span</h4></section></summary><div class="docblock"><p>Visit a node of type <code>swc_common :: Span</code>.</p>
+<p>By default, this method calls [<code>swc_common :: Span::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_text" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8431-8433">Source</a><h4 class="code-header">fn <a href="#method.fold_text" class="fn">fold_text</a>(&amp;mut self, node: Text, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Text</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Text</code>.</p>
+<p>By default, this method calls [<code>Text::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_token" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8438-8440">Source</a><h4 class="code-header">fn <a href="#method.fold_token" class="fn">fold_token</a>(&amp;mut self, node: Token, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Token</h4></section></summary><div class="docblock"><p>Visit a node of type <code>Token</code>.</p>
+<p>By default, this method calls [<code>Token::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="method.fold_token_and_span" class="method"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8445-8451">Source</a><h4 class="code-header">fn <a href="#method.fold_token_and_span" class="fn">fold_token_and_span</a>(
+    &amp;mut self,
+    node: TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; TokenAndSpan</h4></section></summary><div class="docblock"><p>Visit a node of type <code>TokenAndSpan</code>.</p>
+<p>By default, this method calls [<code>TokenAndSpan::fold_children_with_ast_path</code>]. If you want to recurse, you need to call it manually.</p>
+</div></details></div><h2 id="foreign-impls" class="section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor">§</a></h2><details class="toggle implementors-toggle"><summary><section id="impl-FoldAstPath-for-Either%3CA,+B%3E" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8773-9055">Source</a><a href="#impl-FoldAstPath-for-Either%3CA,+B%3E" class="anchor">§</a><h3 class="code-header">impl&lt;A, B&gt; <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a> for <a class="enum" href="https://docs.rs/either/1/either/enum.Either.html" title="enum either::Either">Either</a>&lt;A, B&gt;<div class="where">where
+    A: <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a>,
+    B: <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.fold_atom-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8779-8788">Source</a><a href="#method.fold_atom-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_atom" class="fn">fold_atom</a>(&amp;mut self, node: Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Atom</h4></section><section id="method.fold_attribute-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8791-8800">Source</a><a href="#method.fold_attribute-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute" class="fn">fold_attribute</a>(
+    &amp;mut self,
+    node: Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Attribute</h4></section><section id="method.fold_attribute_token-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8803-8816">Source</a><a href="#method.fold_attribute_token-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_token" class="fn">fold_attribute_token</a>(
+    &amp;mut self,
+    node: AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; AttributeToken</h4></section><section id="method.fold_attribute_tokens-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8819-8832">Source</a><a href="#method.fold_attribute_tokens-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_tokens" class="fn">fold_attribute_tokens</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;</h4></section><section id="method.fold_attributes-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8835-8848">Source</a><a href="#method.fold_attributes-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attributes" class="fn">fold_attributes</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;</h4></section><section id="method.fold_cdata_section-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8851-8864">Source</a><a href="#method.fold_cdata_section-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_cdata_section" class="fn">fold_cdata_section</a>(
+    &amp;mut self,
+    node: CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; CdataSection</h4></section><section id="method.fold_child-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8867-8872">Source</a><a href="#method.fold_child-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_child" class="fn">fold_child</a>(&amp;mut self, node: Child, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Child</h4></section><section id="method.fold_childs-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8875-8882">Source</a><a href="#method.fold_childs-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_childs" class="fn">fold_childs</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;</h4></section><section id="method.fold_comment-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8885-8894">Source</a><a href="#method.fold_comment-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_comment" class="fn">fold_comment</a>(
+    &amp;mut self,
+    node: Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Comment</h4></section><section id="method.fold_document-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8897-8906">Source</a><a href="#method.fold_document-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document" class="fn">fold_document</a>(
+    &amp;mut self,
+    node: Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Document</h4></section><section id="method.fold_document_mode-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8909-8922">Source</a><a href="#method.fold_document_mode-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_mode" class="fn">fold_document_mode</a>(
+    &amp;mut self,
+    node: DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentMode</h4></section><section id="method.fold_document_type-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8925-8938">Source</a><a href="#method.fold_document_type-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_type" class="fn">fold_document_type</a>(
+    &amp;mut self,
+    node: DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentType</h4></section><section id="method.fold_element-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8941-8950">Source</a><a href="#method.fold_element-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_element" class="fn">fold_element</a>(
+    &amp;mut self,
+    node: Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Element</h4></section><section id="method.fold_namespace-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8953-8962">Source</a><a href="#method.fold_namespace-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_namespace" class="fn">fold_namespace</a>(
+    &amp;mut self,
+    node: Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Namespace</h4></section><section id="method.fold_opt_atom-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8965-8978">Source</a><a href="#method.fold_opt_atom-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_atom" class="fn">fold_opt_atom</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;</h4></section><section id="method.fold_opt_namespace-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8981-8994">Source</a><a href="#method.fold_opt_namespace-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_namespace" class="fn">fold_opt_namespace</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;</h4></section><section id="method.fold_processing_instruction-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8997-9010">Source</a><a href="#method.fold_processing_instruction-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_processing_instruction" class="fn">fold_processing_instruction</a>(
+    &amp;mut self,
+    node: ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; ProcessingInstruction</h4></section><section id="method.fold_span-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9013-9022">Source</a><a href="#method.fold_span-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_span" class="fn">fold_span</a>(&amp;mut self, node: Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Span</h4></section><section id="method.fold_text-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9025-9030">Source</a><a href="#method.fold_text-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_text" class="fn">fold_text</a>(&amp;mut self, node: Text, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Text</h4></section><section id="method.fold_token-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9033-9038">Source</a><a href="#method.fold_token-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token" class="fn">fold_token</a>(&amp;mut self, node: Token, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Token</h4></section><section id="method.fold_token_and_span-1" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9041-9054">Source</a><a href="#method.fold_token_and_span-1" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token_and_span" class="fn">fold_token_and_span</a>(
+    &amp;mut self,
+    node: TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; TokenAndSpan</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FoldAstPath-for-%26mut+V" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8455-8611">Source</a><a href="#impl-FoldAstPath-for-%26mut+V" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut V</a><div class="where">where
+    V: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.fold_atom-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8460-8466">Source</a><a href="#method.fold_atom-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_atom" class="fn">fold_atom</a>(&amp;mut self, node: Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Atom</h4></section><section id="method.fold_attribute-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8469-8471">Source</a><a href="#method.fold_attribute-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute" class="fn">fold_attribute</a>(
+    &amp;mut self,
+    node: Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Attribute</h4></section><section id="method.fold_attribute_token-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8474-8480">Source</a><a href="#method.fold_attribute_token-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_token" class="fn">fold_attribute_token</a>(
+    &amp;mut self,
+    node: AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; AttributeToken</h4></section><section id="method.fold_attribute_tokens-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8483-8489">Source</a><a href="#method.fold_attribute_tokens-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_tokens" class="fn">fold_attribute_tokens</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;</h4></section><section id="method.fold_attributes-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8492-8498">Source</a><a href="#method.fold_attributes-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attributes" class="fn">fold_attributes</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;</h4></section><section id="method.fold_cdata_section-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8501-8507">Source</a><a href="#method.fold_cdata_section-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_cdata_section" class="fn">fold_cdata_section</a>(
+    &amp;mut self,
+    node: CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; CdataSection</h4></section><section id="method.fold_child-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8510-8512">Source</a><a href="#method.fold_child-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_child" class="fn">fold_child</a>(&amp;mut self, node: Child, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Child</h4></section><section id="method.fold_childs-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8515-8517">Source</a><a href="#method.fold_childs-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_childs" class="fn">fold_childs</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;</h4></section><section id="method.fold_comment-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8520-8522">Source</a><a href="#method.fold_comment-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_comment" class="fn">fold_comment</a>(
+    &amp;mut self,
+    node: Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Comment</h4></section><section id="method.fold_document-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8525-8527">Source</a><a href="#method.fold_document-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document" class="fn">fold_document</a>(
+    &amp;mut self,
+    node: Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Document</h4></section><section id="method.fold_document_mode-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8530-8536">Source</a><a href="#method.fold_document_mode-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_mode" class="fn">fold_document_mode</a>(
+    &amp;mut self,
+    node: DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentMode</h4></section><section id="method.fold_document_type-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8539-8545">Source</a><a href="#method.fold_document_type-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_type" class="fn">fold_document_type</a>(
+    &amp;mut self,
+    node: DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentType</h4></section><section id="method.fold_element-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8548-8550">Source</a><a href="#method.fold_element-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_element" class="fn">fold_element</a>(
+    &amp;mut self,
+    node: Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Element</h4></section><section id="method.fold_namespace-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8553-8555">Source</a><a href="#method.fold_namespace-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_namespace" class="fn">fold_namespace</a>(
+    &amp;mut self,
+    node: Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Namespace</h4></section><section id="method.fold_opt_atom-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8558-8564">Source</a><a href="#method.fold_opt_atom-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_atom" class="fn">fold_opt_atom</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;</h4></section><section id="method.fold_opt_namespace-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8567-8573">Source</a><a href="#method.fold_opt_namespace-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_namespace" class="fn">fold_opt_namespace</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;</h4></section><section id="method.fold_processing_instruction-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8576-8582">Source</a><a href="#method.fold_processing_instruction-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_processing_instruction" class="fn">fold_processing_instruction</a>(
+    &amp;mut self,
+    node: ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; ProcessingInstruction</h4></section><section id="method.fold_span-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8585-8591">Source</a><a href="#method.fold_span-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_span" class="fn">fold_span</a>(&amp;mut self, node: Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Span</h4></section><section id="method.fold_text-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8594-8596">Source</a><a href="#method.fold_text-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_text" class="fn">fold_text</a>(&amp;mut self, node: Text, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Text</h4></section><section id="method.fold_token-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8599-8601">Source</a><a href="#method.fold_token-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token" class="fn">fold_token</a>(&amp;mut self, node: Token, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Token</h4></section><section id="method.fold_token_and_span-2" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8604-8610">Source</a><a href="#method.fold_token_and_span-2" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token_and_span" class="fn">fold_token_and_span</a>(
+    &amp;mut self,
+    node: TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; TokenAndSpan</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FoldAstPath-for-Box%3CV%3E" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8614-8770">Source</a><a href="#impl-FoldAstPath-for-Box%3CV%3E" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;V&gt;<div class="where">where
+    V: ?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.fold_atom-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8619-8625">Source</a><a href="#method.fold_atom-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_atom" class="fn">fold_atom</a>(&amp;mut self, node: Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Atom</h4></section><section id="method.fold_attribute-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8628-8630">Source</a><a href="#method.fold_attribute-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute" class="fn">fold_attribute</a>(
+    &amp;mut self,
+    node: Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Attribute</h4></section><section id="method.fold_attribute_token-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8633-8639">Source</a><a href="#method.fold_attribute_token-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_token" class="fn">fold_attribute_token</a>(
+    &amp;mut self,
+    node: AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; AttributeToken</h4></section><section id="method.fold_attribute_tokens-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8642-8648">Source</a><a href="#method.fold_attribute_tokens-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_tokens" class="fn">fold_attribute_tokens</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;</h4></section><section id="method.fold_attributes-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8651-8657">Source</a><a href="#method.fold_attributes-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attributes" class="fn">fold_attributes</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;</h4></section><section id="method.fold_cdata_section-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8660-8666">Source</a><a href="#method.fold_cdata_section-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_cdata_section" class="fn">fold_cdata_section</a>(
+    &amp;mut self,
+    node: CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; CdataSection</h4></section><section id="method.fold_child-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8669-8671">Source</a><a href="#method.fold_child-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_child" class="fn">fold_child</a>(&amp;mut self, node: Child, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Child</h4></section><section id="method.fold_childs-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8674-8676">Source</a><a href="#method.fold_childs-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_childs" class="fn">fold_childs</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;</h4></section><section id="method.fold_comment-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8679-8681">Source</a><a href="#method.fold_comment-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_comment" class="fn">fold_comment</a>(
+    &amp;mut self,
+    node: Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Comment</h4></section><section id="method.fold_document-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8684-8686">Source</a><a href="#method.fold_document-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document" class="fn">fold_document</a>(
+    &amp;mut self,
+    node: Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Document</h4></section><section id="method.fold_document_mode-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8689-8695">Source</a><a href="#method.fold_document_mode-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_mode" class="fn">fold_document_mode</a>(
+    &amp;mut self,
+    node: DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentMode</h4></section><section id="method.fold_document_type-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8698-8704">Source</a><a href="#method.fold_document_type-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_type" class="fn">fold_document_type</a>(
+    &amp;mut self,
+    node: DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentType</h4></section><section id="method.fold_element-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8707-8709">Source</a><a href="#method.fold_element-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_element" class="fn">fold_element</a>(
+    &amp;mut self,
+    node: Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Element</h4></section><section id="method.fold_namespace-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8712-8714">Source</a><a href="#method.fold_namespace-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_namespace" class="fn">fold_namespace</a>(
+    &amp;mut self,
+    node: Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Namespace</h4></section><section id="method.fold_opt_atom-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8717-8723">Source</a><a href="#method.fold_opt_atom-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_atom" class="fn">fold_opt_atom</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;</h4></section><section id="method.fold_opt_namespace-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8726-8732">Source</a><a href="#method.fold_opt_namespace-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_namespace" class="fn">fold_opt_namespace</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;</h4></section><section id="method.fold_processing_instruction-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8735-8741">Source</a><a href="#method.fold_processing_instruction-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_processing_instruction" class="fn">fold_processing_instruction</a>(
+    &amp;mut self,
+    node: ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; ProcessingInstruction</h4></section><section id="method.fold_span-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8744-8750">Source</a><a href="#method.fold_span-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_span" class="fn">fold_span</a>(&amp;mut self, node: Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Span</h4></section><section id="method.fold_text-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8753-8755">Source</a><a href="#method.fold_text-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_text" class="fn">fold_text</a>(&amp;mut self, node: Text, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Text</h4></section><section id="method.fold_token-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8758-8760">Source</a><a href="#method.fold_token-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token" class="fn">fold_token</a>(&amp;mut self, node: Token, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Token</h4></section><section id="method.fold_token_and_span-3" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#8763-8769">Source</a><a href="#method.fold_token_and_span-3" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token_and_span" class="fn">fold_token_and_span</a>(
+    &amp;mut self,
+    node: TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; TokenAndSpan</h4></section></div></details><details class="toggle implementors-toggle"><summary><section id="impl-FoldAstPath-for-Optional%3CV%3E" class="impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9058-9298">Source</a><a href="#impl-FoldAstPath-for-Optional%3CV%3E" class="anchor">§</a><h3 class="code-header">impl&lt;V&gt; <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a> for Optional&lt;V&gt;<div class="where">where
+    V: <a class="trait" href="trait.FoldAstPath.html" title="trait swc_xml_visit::FoldAstPath">FoldAstPath</a>,</div></h3></section></summary><div class="impl-items"><section id="method.fold_atom-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9063-9073">Source</a><a href="#method.fold_atom-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_atom" class="fn">fold_atom</a>(&amp;mut self, node: Atom, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Atom</h4></section><section id="method.fold_attribute-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9076-9082">Source</a><a href="#method.fold_attribute-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute" class="fn">fold_attribute</a>(
+    &amp;mut self,
+    node: Attribute,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Attribute</h4></section><section id="method.fold_attribute_token-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9085-9095">Source</a><a href="#method.fold_attribute_token-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_token" class="fn">fold_attribute_token</a>(
+    &amp;mut self,
+    node: AttributeToken,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; AttributeToken</h4></section><section id="method.fold_attribute_tokens-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9098-9108">Source</a><a href="#method.fold_attribute_tokens-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attribute_tokens" class="fn">fold_attribute_tokens</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;AttributeToken&gt;</h4></section><section id="method.fold_attributes-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9111-9121">Source</a><a href="#method.fold_attributes-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_attributes" class="fn">fold_attributes</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Attribute&gt;</h4></section><section id="method.fold_cdata_section-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9124-9134">Source</a><a href="#method.fold_cdata_section-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_cdata_section" class="fn">fold_cdata_section</a>(
+    &amp;mut self,
+    node: CdataSection,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; CdataSection</h4></section><section id="method.fold_child-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9137-9143">Source</a><a href="#method.fold_child-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_child" class="fn">fold_child</a>(&amp;mut self, node: Child, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Child</h4></section><section id="method.fold_childs-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9146-9152">Source</a><a href="#method.fold_childs-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_childs" class="fn">fold_childs</a>(
+    &amp;mut self,
+    node: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;Child&gt;</h4></section><section id="method.fold_comment-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9155-9161">Source</a><a href="#method.fold_comment-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_comment" class="fn">fold_comment</a>(
+    &amp;mut self,
+    node: Comment,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Comment</h4></section><section id="method.fold_document-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9164-9170">Source</a><a href="#method.fold_document-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document" class="fn">fold_document</a>(
+    &amp;mut self,
+    node: Document,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Document</h4></section><section id="method.fold_document_mode-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9173-9183">Source</a><a href="#method.fold_document_mode-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_mode" class="fn">fold_document_mode</a>(
+    &amp;mut self,
+    node: DocumentMode,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentMode</h4></section><section id="method.fold_document_type-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9186-9196">Source</a><a href="#method.fold_document_type-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_document_type" class="fn">fold_document_type</a>(
+    &amp;mut self,
+    node: DocumentType,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; DocumentType</h4></section><section id="method.fold_element-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9199-9205">Source</a><a href="#method.fold_element-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_element" class="fn">fold_element</a>(
+    &amp;mut self,
+    node: Element,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Element</h4></section><section id="method.fold_namespace-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9208-9214">Source</a><a href="#method.fold_namespace-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_namespace" class="fn">fold_namespace</a>(
+    &amp;mut self,
+    node: Namespace,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; Namespace</h4></section><section id="method.fold_opt_atom-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9217-9227">Source</a><a href="#method.fold_opt_atom-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_atom" class="fn">fold_opt_atom</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Atom&gt;</h4></section><section id="method.fold_opt_namespace-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9230-9240">Source</a><a href="#method.fold_opt_namespace-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_opt_namespace" class="fn">fold_opt_namespace</a>(
+    &amp;mut self,
+    node: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Namespace&gt;</h4></section><section id="method.fold_processing_instruction-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9243-9253">Source</a><a href="#method.fold_processing_instruction-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_processing_instruction" class="fn">fold_processing_instruction</a>(
+    &amp;mut self,
+    node: ProcessingInstruction,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; ProcessingInstruction</h4></section><section id="method.fold_span-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9256-9266">Source</a><a href="#method.fold_span-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_span" class="fn">fold_span</a>(&amp;mut self, node: Span, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Span</h4></section><section id="method.fold_text-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9269-9275">Source</a><a href="#method.fold_text-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_text" class="fn">fold_text</a>(&amp;mut self, node: Text, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Text</h4></section><section id="method.fold_token-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9278-9284">Source</a><a href="#method.fold_token-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token" class="fn">fold_token</a>(&amp;mut self, node: Token, __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>) -&gt; Token</h4></section><section id="method.fold_token_and_span-4" class="method trait-impl"><a class="src rightside" href="../src/swc_xml_visit/generated.rs.html#9287-9297">Source</a><a href="#method.fold_token_and_span-4" class="anchor">§</a><h4 class="code-header">fn <a href="#method.fold_token_and_span" class="fn">fold_token_and_span</a>(
+    &amp;mut self,
+    node: TokenAndSpan,
+    __ast_path: &amp;mut <a class="type" href="type.AstKindPath.html" title="type swc_xml_visit::AstKindPath">AstKindPath</a>,
+) -&gt; TokenAndSpan</h4></section></div></details><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"></div><script src="../trait.impl/swc_xml_visit/generated/trait.FoldAstPath.js" data-ignore-extern-crates="alloc,either,swc_visit" async></script></section></div></main></body></html>

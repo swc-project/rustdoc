@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["FieldType","TraitKind","Variant"],"fn":["all_field_types","all_types_in_ty","define_fields","doc","extract_generic","extract_vec","field_variant","generate","to_field_ty","to_iter"],"struct":["Generator"]};

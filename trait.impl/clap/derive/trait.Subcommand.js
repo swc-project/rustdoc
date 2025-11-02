@@ -1,0 +1,9 @@
+(function() {
+    var implementors = Object.fromEntries([["dbg_swc",[["impl Subcommand for <a class=\"enum\" href=\"dbg_swc/enum.Cmd.html\" title=\"enum dbg_swc::Cmd\">Cmd</a>"],["impl Subcommand for <a class=\"enum\" href=\"dbg_swc/es/enum.EsCommand.html\" title=\"enum dbg_swc::es::EsCommand\">EsCommand</a>"],["impl Subcommand for <a class=\"enum\" href=\"dbg_swc/es/exec_test/enum.ExecForTestingCommand.html\" title=\"enum dbg_swc::es::exec_test::ExecForTestingCommand\">ExecForTestingCommand</a>"],["impl Subcommand for <a class=\"enum\" href=\"dbg_swc/es/minifier/enum.MinifierCommand.html\" title=\"enum dbg_swc::es::minifier::MinifierCommand\">MinifierCommand</a>"],["impl Subcommand for <a class=\"enum\" href=\"dbg_swc/es/minifier/next/enum.NextCommand.html\" title=\"enum dbg_swc::es::minifier::next::NextCommand\">NextCommand</a>"]]]]);
+    if (window.register_implementors) {
+        window.register_implementors(implementors);
+    } else {
+        window.pending_implementors = implementors;
+    }
+})()
+//{"start":57,"fragment_lengths":[788]}

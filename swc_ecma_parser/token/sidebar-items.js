@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["BinOpToken","IdentKind","IdentLike","Keyword","KnownIdent","Token","TokenKind","Word","WordKind"],"macro":["declare_keyword","ident_like","known_ident","known_ident_token"],"struct":["TokenAndSpan"]};

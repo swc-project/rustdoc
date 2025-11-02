@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["AstParentKind","AstParentNodeRef","AttributeField","AttributeTokenField","CdataSectionField","ChildField","CommentField","DocumentField","DocumentModeField","DocumentTypeField","ElementField","NamespaceField","ProcessingInstructionField","TextField","TokenAndSpanField","TokenField"]};

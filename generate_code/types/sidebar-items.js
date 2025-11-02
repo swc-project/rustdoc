@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["collect_use_items","for_each_use_item","qualify_types"],"struct":["Folder"]};

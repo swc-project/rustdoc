@@ -1,0 +1,1 @@
+searchState.loadedDescShard("swc_ecma_compat_es2020", 0, "Returns the argument unchanged.\nCalls <code>U::from(self)</code>.\nConfiguration for nullish coalescing transformation\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.\nCreates a nullish coalescing transformation pass\nReturns the argument unchanged.\nCalls <code>U::from(self)</code>.")

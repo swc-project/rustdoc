@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["collect_input_files","get_type_defs","main","parse_rust_file","run_cargo_fmt","run_visitor_codegen"],"mod":["generators","types"],"struct":["CliArgs"]};
